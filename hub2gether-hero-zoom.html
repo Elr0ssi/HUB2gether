@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hub2gether — Hero + App Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #F7F8F4;
+  color: #0F2E22;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+:root {
+  --dark:   #0F2E22;
+  --mint:   #7FE3B3;
+  --yellow: #FFEC6D;
+  --cream:  #F7F8F4;
+  --white:  #FFFFFF;
+}
+
+/* ══════════════════════════════════════════
+   HERO NORMAL (intro au-dessus)
+══════════════════════════════════════════ */
+.hero-intro {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 6vw 60px;
+  text-align: center;
+  position: relative;
+  background: var(--cream);
+  overflow: hidden;
+}
+
+.hero-intro::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(15,46,34,0.06) 1.5px, transparent 1.5px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(127,227,179,0.15);
+  border: 1px solid rgba(127,227,179,0.4);
+  border-radius: 99px;
+  padding: 7px 20px;
+  font-size: 0.7rem; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: #0a6640;
+  margin-bottom: 30px;
+  animation: fadeUp 0.7s ease both;
+}
+.badge-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%; background: var(--mint);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(127,227,179,0.5); }
+  50%      { box-shadow: 0 0 0 6px rgba(127,227,179,0); }
+}
+
+.hero-intro h1 {
+  font-size: clamp(3rem, 6.5vw, 6rem);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  max-width: 900px;
+  animation: fadeUp 0.7s ease 0.1s both;
+}
+.hero-intro h1 em {
+  font-style: normal;
+  position: relative; display: inline-block; z-index: 0;
+}
+.hero-intro h1 em::after {
+  content: '';
+  position: absolute; left: -3px; right: -3px; bottom: 8px;
+  height: 14px; background: var(--yellow);
+  z-index: -1; border-radius: 5px;
+}
+
+.hero-sub {
+  font-size: 1.05rem; font-weight: 400;
+  color: rgba(15,46,34,0.5);
+  line-height: 1.85; max-width: 520px;
+  margin: 24px auto 44px;
+  animation: fadeUp 0.7s ease 0.2s both;
+}
+
+.hero-btns {
+  display: flex; gap: 14px; justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.7s ease 0.3s both;
+}
+.btn-p {
+  background: var(--dark); color: var(--mint);
+  border: none; border-radius: 99px;
+  padding: 16px 34px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem; font-weight: 600;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 9px;
+  transition: all 0.25s;
+  box-shadow: 0 4px 24px rgba(15,46,34,0.18);
+}
+.btn-p:hover { background: #1e5c3a; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(15,46,34,0.28); }
+.btn-s {
+  background: transparent; color: var(--dark);
+  border: 1.5px solid rgba(15,46,34,0.2);
+  border-radius: 99px;
+  padding: 15px 30px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem; font-weight: 500;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 9px;
+  transition: all 0.25s;
+}
+.btn-s:hover { border-color: var(--dark); background: rgba(15,46,34,0.04); }
+
+/* scroll cue */
+.scroll-cue {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: fadeUp 0.7s ease 0.6s both;
+  opacity: 0.4;
+}
+.scroll-cue span { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; }
+.scroll-line {
+  width: 1.5px; height: 48px;
+  background: linear-gradient(to bottom, var(--dark), transparent);
+  animation: scroll-line 1.8s ease-in-out infinite;
+}
+@keyframes scroll-line {
+  0%   { transform: scaleY(0); transform-origin: top; }
+  50%  { transform: scaleY(1); transform-origin: top; }
+  51%  { transform: scaleY(1); transform-origin: bottom; }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ══════════════════════════════════════════
+   ZOOM SCROLL SECTION — la carte arrondie
+══════════════════════════════════════════ */
+.zoom-section {
+  position: relative;
+  /* hauteur de scroll = durée de l'animation */
+  height: 300vh;
+  background: var(--cream);
+}
+
+.zoom-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* La carte qui grandit */
+.zoom-card {
+  position: absolute;
+  width: 72vw;
+  min-height: 72vh;
+  background: var(--dark);
+  border-radius: 48px;
+  overflow: hidden;
+  transform-origin: center center;
+  will-change: transform, border-radius, width, height;
+  transition: border-radius 0.05s linear;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* image de fond / texture */
+.zoom-card-bg {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(127,227,179,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 80%, rgba(255,236,109,0.1) 0%, transparent 60%),
+    linear-gradient(160deg, #0F2E22 0%, #0a1e15 100%);
+}
+
+/* dot grid sur la carte */
+.zoom-card-grid {
+  position: absolute; inset: 0;
+  background-image: radial-gradient(circle, rgba(127,227,179,0.12) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 40%, transparent 100%);
+}
+
+/* lignes diagonales dynamiques */
+.zoom-card-lines {
+  position: absolute; inset: 0; overflow: hidden;
+  opacity: 0.06;
+}
+.zoom-card-lines::before,
+.zoom-card-lines::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--mint), transparent);
+  top: 38%;
+  left: -50%;
+  transform: rotate(-12deg);
+  animation: line-sweep 6s ease-in-out infinite;
+}
+.zoom-card-lines::after {
+  top: 62%;
+  animation-delay: 3s;
+  transform: rotate(-12deg);
+}
+@keyframes line-sweep {
+  0%,100% { opacity: 0.3; transform: rotate(-12deg) translateX(-10%); }
+  50%      { opacity: 1;   transform: rotate(-12deg) translateX(10%); }
+}
+
+/* Contenu de la carte */
+.zoom-card-content {
+  position: relative; z-index: 2;
+  text-align: center;
+  padding: 60px 6vw;
+  max-width: 700px;
+  /* disparaît quand la carte est en plein écran */
+  transition: opacity 0.3s;
+}
+.zoom-card-content.hidden { opacity: 0; pointer-events: none; }
+
+.zoom-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(127,227,179,0.7);
+  margin-bottom: 24px;
+}
+.zoom-eyebrow-bar { width: 28px; height: 2px; background: var(--mint); border-radius: 99px; }
+
+.zoom-card-content h2 {
+  font-size: clamp(2rem, 4vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.zoom-card-content h2 span { color: var(--mint); }
+
+.zoom-card-content p {
+  font-size: 1rem; font-weight: 400;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.85; max-width: 440px;
+  margin: 0 auto 40px;
+}
+
+/* app mockup flottant dans la carte */
+.zoom-app-preview {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(580px, 80%);
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px 20px 0 0;
+  backdrop-filter: blur(10px);
+  padding: 20px 20px 0;
+  z-index: 3;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.zoom-app-preview.hidden { opacity: 0; transform: translateX(-50%) translateY(20px); }
+
+.app-topbar {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.app-dot { width: 9px; height: 9px; border-radius: 50%; }
+.app-dot:nth-child(1) { background: rgba(255,95,87,0.7); }
+.app-dot:nth-child(2) { background: rgba(255,189,46,0.7); }
+.app-dot:nth-child(3) { background: rgba(40,202,65,0.7); }
+.app-url {
+  flex: 1; background: rgba(255,255,255,0.07);
+  border-radius: 6px; padding: 5px 12px;
+  font-size: 0.68rem; color: rgba(255,255,255,0.35);
+  display: flex; align-items: center; gap: 6px;
+}
+
+.app-content {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+.app-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px;
+}
+.app-card-icon {
+  width: 32px; height: 32px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; margin-bottom: 10px;
+}
+.app-card-icon.m { background: rgba(127,227,179,0.2); }
+.app-card-icon.y { background: rgba(255,236,109,0.2); }
+.app-card-icon.w { background: rgba(255,255,255,0.1); }
+.app-card-title { font-size: 0.7rem; font-weight: 600; color: rgba(255,255,255,0.7); margin-bottom: 4px; }
+.app-card-sub   { font-size: 0.62rem; color: rgba(255,255,255,0.35); }
+.app-card-num   { font-size: 1.3rem; font-weight: 800; color: #fff; margin-top: 6px; }
+
+/* Fullscreen state — quand la carte couvre tout */
+.zoom-app-full {
+  position: absolute; inset: 0; z-index: 4;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.4s;
+  display: flex; align-items: center; justify-content: center;
+  padding: 60px 6vw;
+  overflow: hidden;
+}
+.zoom-app-full.visible { opacity: 1; }
+
+/* Dashboard complet qui apparaît en fullscreen */
+.dash-full {
+  width: 100%; max-width: 960px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.dash-stat {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px; padding: 24px 20px;
+  transition: background 0.3s;
+}
+.dash-stat:hover { background: rgba(127,227,179,0.1); }
+.dash-stat-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.08em; color: rgba(255,255,255,0.4); text-transform: uppercase; margin-bottom: 8px; }
+.dash-stat-value { font-size: 2rem; font-weight: 900; color: #fff; letter-spacing: -0.03em; line-height: 1; }
+.dash-stat-trend { font-size: 0.7rem; font-weight: 600; color: var(--mint); margin-top: 6px; }
+
+.dash-chart {
+  grid-column: span 2;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px; padding: 24px;
+}
+.dash-chart-title { font-size: 0.78rem; font-weight: 700; color: rgba(255,255,255,0.7); margin-bottom: 20px; }
+.dash-bars {
+  display: flex; align-items: flex-end; gap: 8px;
+  height: 80px;
+}
+.dash-bar-item {
+  flex: 1; border-radius: 6px 6px 0 0;
+  background: rgba(127,227,179,0.3);
+  transition: background 0.3s;
+  position: relative;
+}
+.dash-bar-item:hover { background: var(--mint); }
+.dash-bar-item span {
+  position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%);
+  font-size: 0.55rem; color: rgba(255,255,255,0.35); white-space: nowrap;
+}
+.dash-bar-item.accent { background: var(--mint); }
+
+.dash-groups {
+  grid-column: span 2;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 18px; padding: 24px;
+}
+.dash-group-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.dash-group-item:last-child { border-bottom: none; }
+.dg-icon {
+  width: 32px; height: 32px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; flex-shrink: 0;
+  background: rgba(127,227,179,0.15);
+}
+.dg-name { font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.75); }
+.dg-sub  { font-size: 0.65rem; color: rgba(255,255,255,0.35); }
+.dg-badge {
+  margin-left: auto;
+  font-size: 0.62rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 99px;
+  background: rgba(127,227,179,0.15); color: var(--mint);
+}
+
+/* Section après le zoom */
+.after-zoom {
+  min-height: 50vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 80px 6vw;
+  text-align: center;
+}
+.after-zoom h2 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800; letter-spacing: -0.03em;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ HERO INTRO ══ -->
+<section class="hero-intro">
+  <div class="hero-badge">
+    <div class="badge-dot"></div>
+    Nouveau — Sport B2B Platform
+  </div>
+
+  <h1>Le sport qui <em>connecte</em><br>votre entreprise</h1>
+
+  <p class="hero-sub">Hub2gether permet aux collaborateurs de se retrouver autour du sport, d'organiser des matchs et de créer une vraie communauté sportive en interne.</p>
+
+  <div class="hero-btns">
+    <button class="btn-p">
+      Demander une démo
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="btn-s">
+      Voir la plateforme
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 9l5 4 5-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+
+  <div class="scroll-cue">
+    <span>Découvrir</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ══ ZOOM SCROLL SECTION ══ -->
+<div class="zoom-section" id="zoomSection">
+  <div class="zoom-sticky" id="zoomSticky">
+
+    <div class="zoom-card" id="zoomCard">
+      <div class="zoom-card-bg"></div>
+      <div class="zoom-card-grid"></div>
+      <div class="zoom-card-lines"></div>
+
+      <!-- Contenu initial (visible avant zoom complet) -->
+      <div class="zoom-card-content" id="zoomContent">
+        <div class="zoom-eyebrow">
+          <div class="zoom-eyebrow-bar"></div>
+          La plateforme
+        </div>
+        <h2>Tout le sport de<br>votre <span>entreprise</span><br>en un seul endroit</h2>
+        <p>Matchmaking, groupes, statistiques, événements — Hub2gether centralise la vie sportive de vos équipes.</p>
+      </div>
+
+      <!-- Mockup app flottant en bas (mi-chemin du zoom) -->
+      <div class="zoom-app-preview" id="zoomAppPreview">
+        <div class="app-topbar">
+          <div class="app-dot"></div>
+          <div class="app-dot"></div>
+          <div class="app-dot"></div>
+          <div class="app-url">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1a4 4 0 1 0 0 8A4 4 0 0 0 5 1z" stroke="currentColor" stroke-width="1"/></svg>
+            app.hub2gether.com
+          </div>
+        </div>
+        <div class="app-content">
+          <div class="app-card">
+            <div class="app-card-icon m">⚽</div>
+            <div class="app-card-title">Matchs à venir</div>
+            <div class="app-card-sub">Foot 5v5 · Mardi 18h</div>
+            <div class="app-card-num">3</div>
+          </div>
+          <div class="app-card">
+            <div class="app-card-icon y">👥</div>
+            <div class="app-card-title">Groupes actifs</div>
+            <div class="app-card-sub">Tennis · Padel · Run</div>
+            <div class="app-card-num">8</div>
+          </div>
+          <div class="app-card">
+            <div class="app-card-icon w">🏆</div>
+            <div class="app-card-title">Votre rang</div>
+            <div class="app-card-sub">Classement foot</div>
+            <div class="app-card-num">#4</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard qui apparaît en fullscreen -->
+      <div class="zoom-app-full" id="zoomFull">
+        <div class="dash-full">
+          <div class="dash-stat">
+            <div class="dash-stat-label">Collaborateurs actifs</div>
+            <div class="dash-stat-value">1 240</div>
+            <div class="dash-stat-trend">↑ +12% ce mois</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Groupes sportifs</div>
+            <div class="dash-stat-value">42</div>
+            <div class="dash-stat-trend">↑ +5 nouveaux</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Matchs ce mois</div>
+            <div class="dash-stat-value">156</div>
+            <div class="dash-stat-trend">↑ +31 vs mois passé</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-label">Satisfaction</div>
+            <div class="dash-stat-value">94%</div>
+            <div class="dash-stat-trend">↑ +2pts</div>
+          </div>
+
+          <div class="dash-chart">
+            <div class="dash-chart-title">Participation hebdomadaire</div>
+            <div class="dash-bars" id="dashBars">
+              <div class="dash-bar-item" style="height:55%"><span>Lun</span></div>
+              <div class="dash-bar-item" style="height:70%"><span>Mar</span></div>
+              <div class="dash-bar-item accent" style="height:100%"><span>Mer</span></div>
+              <div class="dash-bar-item" style="height:80%"><span>Jeu</span></div>
+              <div class="dash-bar-item" style="height:65%"><span>Ven</span></div>
+              <div class="dash-bar-item" style="height:28%"><span>Sam</span></div>
+              <div class="dash-bar-item" style="height:18%"><span>Dim</span></div>
+            </div>
+          </div>
+
+          <div class="dash-groups">
+            <div class="dash-chart-title">Groupes les plus actifs</div>
+            <div class="dash-group-item">
+              <div class="dg-icon">🎾</div>
+              <div>
+                <div class="dg-name">Padel Team Paris</div>
+                <div class="dg-sub">342 membres · 12 matchs/mois</div>
+              </div>
+              <div class="dg-badge">Actif</div>
+            </div>
+            <div class="dash-group-item">
+              <div class="dg-icon">🏃</div>
+              <div>
+                <div class="dg-name">Morning Runners</div>
+                <div class="dg-sub">156 membres · 20 sessions/mois</div>
+              </div>
+              <div class="dg-badge">Actif</div>
+            </div>
+            <div class="dash-group-item">
+              <div class="dg-icon">⚽</div>
+              <div>
+                <div class="dg-name">Football Club</div>
+                <div class="dg-sub">89 membres · 4 matchs/mois</div>
+              </div>
+              <div class="dg-badge">Actif</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /zoom-card -->
+  </div><!-- /zoom-sticky -->
+</div><!-- /zoom-section -->
+
+<div class="after-zoom">
+  <h2>↓ Suite du site ici</h2>
+</div>
+
+<script>
+(function() {
+  var section  = document.getElementById('zoomSection');
+  var card     = document.getElementById('zoomCard');
+  var content  = document.getElementById('zoomContent');
+  var preview  = document.getElementById('zoomAppPreview');
+  var full     = document.getElementById('zoomFull');
+
+  function lerp(a, b, t) { return a + (b - a) * t; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function easeInOut(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+
+  function onScroll() {
+    var rect     = section.getBoundingClientRect();
+    var scrolled = Math.max(0, -rect.top);
+    var total    = section.offsetHeight - window.innerHeight;
+    if (total <= 0) return;
+
+    var raw      = clamp(scrolled / total, 0, 1);
+    var progress = easeInOut(raw);
+
+    /* ── Phase 1 (0→0.5) : la carte grandit et prend tout l'écran ── */
+    var phase1 = clamp(progress / 0.5, 0, 1);
+
+    // largeur : 72vw → 100vw
+    var vw   = window.innerWidth;
+    var vh   = window.innerHeight;
+    var startW = vw * 0.72;
+    var startH = vh * 0.72;
+    var curW  = lerp(startW, vw, phase1);
+    var curH  = lerp(startH, vh, phase1);
+
+    // border-radius : 48px → 0
+    var radius = lerp(48, 0, phase1);
+
+    card.style.width        = curW + 'px';
+    card.style.height       = curH + 'px';
+    card.style.borderRadius = radius + 'px';
+
+    // texte central disparaît après 40%
+    var contentOpacity = clamp(1 - phase1 * 2.5, 0, 1);
+    content.style.opacity = contentOpacity;
+
+    // mockup app apparaît entre 20% et 50%
+    var previewOpacity = clamp((phase1 - 0.2) / 0.3, 0, 1) * clamp(1 - (phase1 - 0.7) / 0.3, 0, 1);
+    preview.style.opacity  = previewOpacity;
+    preview.style.transform = 'translateX(-50%) translateY(' + lerp(30, 0, clamp((phase1 - 0.2) / 0.3, 0, 1)) + 'px)';
+
+    /* ── Phase 2 (0.5→1) : dashboard appear ── */
+    var phase2 = clamp((progress - 0.5) / 0.5, 0, 1);
+    full.style.opacity = phase2 > 0.1 ? clamp((phase2 - 0.1) / 0.4, 0, 1) : 0;
+    if (phase2 > 0.1) full.classList.add('visible');
+    else full.classList.remove('visible');
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+})();
+</script>
+</body>
+</html>
