@@ -380,6 +380,141 @@ nav.scrolled {
   color: #0a6640;
 }
 
+
+.module-showcase {
+  padding: 110px 6vw;
+  background: var(--cream);
+}
+.module-showcase + .module-showcase {
+  padding-top: 0;
+}
+.module-head {
+  max-width: 660px;
+}
+.module-head .section-sub { max-width: 620px; }
+.module-shell {
+  margin-top: 34px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(15,46,34,0.08);
+}
+.module-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(180deg,#fff,#f9faf7);
+}
+.module-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+.module-note {
+  font-size: 0.76rem;
+  color: var(--muted);
+}
+.module-link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #0a6640;
+}
+.module-frame {
+  width: 100%;
+  border: 0;
+  display: block;
+  background: #fff;
+}
+
+/* agenda split */
+.agenda-split {
+  margin-top: 42px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: stretch;
+}
+.agenda-copy {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 34px;
+  box-shadow: 0 14px 40px rgba(15,46,34,0.06);
+}
+.agenda-copy h3 {
+  font-size: 1.4rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+.agenda-copy p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.agenda-points {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+.agenda-points li {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+.agenda-points li strong {
+  display: block;
+  color: var(--dark);
+  margin-bottom: 3px;
+}
+.agenda-panel .module-frame { height: 520px; }
+
+/* dashboard blended section */
+.dashboard-grid {
+  margin-top: 42px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.dashboard-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+}
+.dashboard-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+.dashboard-card p {
+  font-size: 0.86rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.kpi-row {
+  margin-top: 14px;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+}
+.kpi {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+}
+.kpi strong { display:block; font-size: 1.25rem; }
+.kpi span { font-size: 0.7rem; color: var(--muted); }
+.module-frame--dashboard { height: 640px; }
+
 /* ══════════════════════════════════════════
    3D BALL SECTION
 ══════════════════════════════════════════ */
@@ -935,6 +1070,10 @@ footer {
   .nav-links { display: none; }
   .problems-grid, .features-grid, .testi-grid { grid-template-columns: 1fr; }
   .connectors-grid { grid-template-columns: 1fr; }
+  .agenda-split, .dashboard-grid { grid-template-columns: 1fr; }
+  .agenda-copy { padding: 24px; }
+  .agenda-panel .module-frame { height: 460px; }
+  .module-frame--dashboard { height: 520px; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .mockup-grid { grid-template-columns: 1fr 1fr; }
   .mockup-card:nth-child(3) { display: none; }
@@ -961,7 +1100,8 @@ footer {
   </div>
   <ul class="nav-links">
     <li><a href="#features">Produit</a></li>
-    <li><a href="#connectors">Connecteurs</a></li>
+    <li><a href="#agenda-module">Agenda</a></li>
+    <li><a href="#dashboard-module">Dashboard</a></li>
     <li><a href="#pricing">Tarifs</a></li>
     <li><a href="#testi">Témoignages</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1057,20 +1197,97 @@ footer {
     <article class="connector-card">
       <h3 class="connector-name">Connecteur Agenda Sportif</h3>
       <p class="connector-desc">Planifiez vos créneaux, filtrez par sport et visualisez les disponibilités d'équipe dans une interface dédiée.</p>
-      <a class="connector-link" href="./hub2gether-agenda.html">Ouvrir le connecteur agenda →</a>
+      <a class="connector-link" href="#agenda-module">Voir l'agenda sur cette page ↓</a>
     </article>
 
     <article class="connector-card">
       <h3 class="connector-name">Connecteur Hero Zoom</h3>
       <p class="connector-desc">Utilisez le mode Hero Zoom pour vos démonstrations visuelles, animations d'entrée et mises en avant produit.</p>
-      <a class="connector-link" href="./hub2gether-hero-zoom.html">Ouvrir le connecteur hero zoom →</a>
+      <a class="connector-link" href="#dashboard-module">Voir le dashboard sur cette page ↓</a>
     </article>
 
     <article class="connector-card">
       <h3 class="connector-name">Point d'entrée principal</h3>
       <p class="connector-desc">Conservez cet index comme hub : il référence les modules disponibles et facilite la navigation inter-connecteurs.</p>
-      <a class="connector-link" href="#navbar">Revenir en haut de l'index ↑</a>
+      <a class="connector-link" href="#agenda-module">Scroller vers les modules intégrés ↓</a>
     </article>
+  </div>
+</section>
+
+
+
+<!-- ══════ MODULE AGENDA INTÉGRÉ ══════ -->
+<section class="module-showcase" id="agenda-module">
+  <div class="module-head">
+    <div class="section-label">
+      <div class="section-label-bar"></div>
+      <span class="section-label-text" style="color:var(--muted)">Agenda intégré</span>
+    </div>
+    <h2 class="section-title">Un agenda fondu dans la page, compact et lisible</h2>
+    <p class="section-sub">La section agenda est désormais pensée comme un bloc éditorial : explication à gauche, aperçu produit à droite. Vous gardez le contexte de lecture et l'accès rapide à la planification.</p>
+  </div>
+
+  <div class="agenda-split">
+    <article class="agenda-copy">
+      <h3>Comment ça fonctionne</h3>
+      <p>L'agenda agrège les matchs, les créneaux disponibles et les inscriptions des équipes. Les collaborateurs peuvent identifier rapidement les plages libres et rejoindre une session en quelques clics.</p>
+      <ul class="agenda-points">
+        <li><strong>1. Filtrer par sport</strong>Tennis, padel, running ou foot selon les équipes actives.</li>
+        <li><strong>2. Visualiser les créneaux</strong>Les disponibilités sont visibles en un coup d'œil sur la semaine.</li>
+        <li><strong>3. Confirmer sa présence</strong>Un RSVP rapide pour augmenter le taux de participation.</li>
+      </ul>
+    </article>
+
+    <div class="module-shell agenda-panel">
+      <div class="module-topbar">
+        <div>
+          <div class="module-title">Hub2gether · Agenda Sportif</div>
+          <div class="module-note">Aperçu embarqué compact</div>
+        </div>
+        <a class="module-link" href="./hub2gether-agenda.html" target="_blank" rel="noopener">Plein écran ↗</a>
+      </div>
+      <iframe class="module-frame module-frame--agenda" src="./hub2gether-agenda.html" title="Agenda Hub2gether"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ MODULE DASHBOARD INTÉGRÉ ══════ -->
+<section class="module-showcase" id="dashboard-module">
+  <div class="module-head">
+    <div class="section-label">
+      <div class="section-label-bar"></div>
+      <span class="section-label-text" style="color:var(--muted)">Dashboard intégré</span>
+    </div>
+    <h2 class="section-title">Le dashboard RH s'intègre comme une section produit</h2>
+    <p class="section-sub">Cette section mélange storytelling + KPI opérationnels avant d'afficher le dashboard complet, pour un enchaînement naturel avec le reste de la landing.</p>
+  </div>
+
+  <div class="dashboard-grid">
+    <article class="dashboard-card">
+      <h3>Pilotage RH en continu</h3>
+      <p>Suivez l'engagement sportif, la rétention des groupes et la fréquence des événements depuis une vue unique exploitable en comité RH.</p>
+      <div class="kpi-row">
+        <div class="kpi"><strong>+37%</strong><span>Participation</span></div>
+        <div class="kpi"><strong>82%</strong><span>Profils actifs</span></div>
+        <div class="kpi"><strong>5,4</strong><span>Evts / sem.</span></div>
+      </div>
+    </article>
+    <article class="dashboard-card">
+      <h3>Actions recommandées</h3>
+      <p>Le module met en avant les équipes peu actives, les sports en croissance et les créneaux à fort potentiel pour booster l'adoption.</p>
+      <a class="module-link" href="./hub2gether-hero-zoom.html" target="_blank" rel="noopener">Voir la version immersive ↗</a>
+    </article>
+  </div>
+
+  <div class="module-shell">
+    <div class="module-topbar">
+      <div>
+        <div class="module-title">Hub2gether · Dashboard</div>
+        <div class="module-note">Vue embarquée dans la landing</div>
+      </div>
+      <a class="module-link" href="./hub2gether-hero-zoom.html" target="_blank" rel="noopener">Plein écran ↗</a>
+    </div>
+    <iframe class="module-frame module-frame--dashboard" src="./hub2gether-hero-zoom.html" title="Dashboard Hub2gether"></iframe>
   </div>
 </section>
 
@@ -1784,358 +2001,3 @@ document.addEventListener('mousemove', function(e) {
 
 </body>
 </html>
-index.html
-index.html
-+171
--0
-
-@@ -312,50 +312,143 @@ nav.scrolled {
-/* logo band */
-.logo-band {
-  background: var(--white);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 40px 6vw;
-  text-align: center;
-}
-.logo-band p {
-  font-size: 0.7rem; font-weight: 700;
-  letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 28px;
-}
-.logo-band-row {
-  display: flex; align-items: center; justify-content: center;
-  gap: 52px; flex-wrap: wrap;
-}
-.logo-item {
-  font-size: 1rem; font-weight: 800;
-  color: var(--muted); opacity: 0.38;
-  letter-spacing: 0.04em;
-  transition: opacity 0.2s;
-}
-.logo-item:hover { opacity: 0.65; }
-
-/* connector hub */
-.connectors {
-  padding: 92px 6vw;
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-}
-.connectors-grid {
-  margin-top: 42px;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 18px;
-}
-.connector-card {
-  background: var(--cream);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  transition: all 0.25s;
-}
-.connector-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 28px rgba(15,46,34,0.08);
-  border-color: rgba(15,46,34,0.2);
-}
-.connector-name {
-  font-size: 0.95rem;
-  font-weight: 700;
-}
-.connector-desc {
-  font-size: 0.83rem;
-  color: var(--muted);
-  line-height: 1.7;
-}
-.connector-link {
-  margin-top: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: #0a6640;
-}
-
-
-.module-showcase {
-  padding: 110px 6vw;
-  background: var(--cream);
-}
-.module-showcase + .module-showcase {
-  padding-top: 0;
-}
-.module-shell {
-  margin-top: 46px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(15,46,34,0.08);
-}
-.module-topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  padding: 16px 20px;
-  border-bottom: 1px solid var(--border);
-  background: linear-gradient(180deg,#fff,#f9faf7);
-}
-.module-title {
-  font-size: 0.86rem;
-  font-weight: 700;
-}
-.module-note {
-  font-size: 0.76rem;
-  color: var(--muted);
-}
-.module-link {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #0a6640;
-}
-.module-frame {
-  width: 100%;
-  border: 0;
-  display: block;
-  background: #fff;
-}
-.module-frame--agenda { height: 720px; }
-.module-frame--dashboard { height: 820px; }
-
-/* ══════════════════════════════════════════
-   3D BALL SECTION
-══════════════════════════════════════════ */
-.ball-section {
-  position: relative;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  background: var(--dark);
-}
-
-.ball-canvas-wrap {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-#ballCanvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-
-.ball-text {
-@@ -866,76 +959,80 @@ footer {
-  transition: color 0.2s;
-}
-.footer-col a:hover { color: #fff; }
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding-top: 28px;
-  display: flex; justify-content: space-between;
-  align-items: center; flex-wrap: wrap; gap: 12px;
-}
-.footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
-
-/* ══════════════════════════════════════════
-   SCROLL ANIMATIONS
-══════════════════════════════════════════ */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ══════════════════════════════════════════
-   RESPONSIVE
-══════════════════════════════════════════ */
-@media (max-width: 900px) {
-  .nav-links { display: none; }
-  .problems-grid, .features-grid, .testi-grid { grid-template-columns: 1fr; }
-  .connectors-grid { grid-template-columns: 1fr; }
-  .module-frame--agenda, .module-frame--dashboard { height: 640px; }
-  .stats-row { grid-template-columns: 1fr 1fr; }
-  .mockup-grid { grid-template-columns: 1fr 1fr; }
-  .mockup-card:nth-child(3) { display: none; }
-  .hero-tag { display: none; }
-  .pricing-sticky { flex-direction: column; height: auto; min-height: 100vh; }
-  .pricing-left { flex: none; max-width: 100%; padding: 60px 6vw 40px; }
-  .pricing-right { padding: 20px 6vw 60px; }
-  .cards-wrap { max-width: 100%; height: 680px; }
-}
-@media (max-width: 600px) {
-  .stats-row { grid-template-columns: 1fr; }
-  .plan-card { padding: 36px 28px 30px; }
-  .hc-amount { font-size: 3rem; }
-}
-</style>
-</head>
-<body>
-
-<!-- ══════ NAV ══════ -->
-<nav id="navbar">
-  <div class="nav-logo">
-    <div class="nav-logo-dot"></div>
-    Hub2gether
-  </div>
-  <ul class="nav-links">
-    <li><a href="#features">Produit</a></li>
-    <li><a href="#agenda-module">Agenda</a></li>
-    <li><a href="#dashboard-module">Dashboard</a></li>
-    <li><a href="#pricing">Tarifs</a></li>
-    <li><a href="#testi">Témoignages</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-    Demander une démo
-  </button>
-</nav>
-
-<!-- ══════ HERO ══════ -->
-<section class="hero">
-  <div class="hero-orb hero-orb-1"></div>
-  <div class="hero-orb hero-orb-2"></div>
-
-  <div class="hero-badge">
-    <div class="hero-badge-dot"></div>
-    Nouveau — Plateforme sport B2B
-  </div>
-
-  <h1>Le sport qui <span class="hl">connecte</span><br>votre entreprise</h1>
-
-  <p class="hero-sub">Hub2gether permet aux collaborateurs de se retrouver autour du sport, d'organiser des matchs et de créer une vraie communauté sportive au sein de leur entreprise.</p>
-
-  <div class="hero-btns">
-    <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-@@ -974,50 +1071,124 @@ footer {
-        <div class="mc-num">8</div>
-      </div>
-      <div class="mockup-card">
-        <div class="mc-icon dark">🏆</div>
-        <div class="mc-title">Votre rang</div>
-        <div class="mc-sub">Classement foot</div>
-        <div class="mc-num">#4</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══════ LOGO BAND ══════ -->
-<div class="logo-band">
-  <p>Déjà adopté par des équipes ambitieuses</p>
-  <div class="logo-band-row">
-    <div class="logo-item">ACCENTURE</div>
-    <div class="logo-item">DECATHLON</div>
-    <div class="logo-item">VEOLIA</div>
-    <div class="logo-item">SANOFI</div>
-    <div class="logo-item">CAPGEMINI</div>
-    <div class="logo-item">ENGIE</div>
-  </div>
-</div>
-
-<!-- ══════ CONNECTORS ══════ -->
-<section class="connectors" id="connectors">
-  <div class="section-label">
-    <div class="section-label-bar"></div>
-    <span class="section-label-text" style="color:var(--muted)">Connecteurs</span>
-  </div>
-  <h2 class="section-title">Un index central pour lancer<br>vos autres connecteurs</h2>
-  <p class="section-sub">Depuis cette page, vous pouvez accéder rapidement à vos modules Hub2gether et les brancher à vos usages internes.</p>
-
-  <div class="connectors-grid">
-    <article class="connector-card">
-      <h3 class="connector-name">Connecteur Agenda Sportif</h3>
-      <p class="connector-desc">Planifiez vos créneaux, filtrez par sport et visualisez les disponibilités d'équipe dans une interface dédiée.</p>
-      <a class="connector-link" href="#agenda-module">Voir l'agenda sur cette page ↓</a>
-    </article>
-
-    <article class="connector-card">
-      <h3 class="connector-name">Connecteur Hero Zoom</h3>
-      <p class="connector-desc">Utilisez le mode Hero Zoom pour vos démonstrations visuelles, animations d'entrée et mises en avant produit.</p>
-      <a class="connector-link" href="#dashboard-module">Voir le dashboard sur cette page ↓</a>
-    </article>
-
-    <article class="connector-card">
-      <h3 class="connector-name">Point d'entrée principal</h3>
-      <p class="connector-desc">Conservez cet index comme hub : il référence les modules disponibles et facilite la navigation inter-connecteurs.</p>
-      <a class="connector-link" href="#agenda-module">Scroller vers les modules intégrés ↓</a>
-    </article>
-  </div>
-</section>
-
-
-
-<!-- ══════ MODULE AGENDA INTÉGRÉ ══════ -->
-<section class="module-showcase" id="agenda-module">
-  <div class="section-label">
-    <div class="section-label-bar"></div>
-    <span class="section-label-text" style="color:var(--muted)">Agenda intégré</span>
-  </div>
-  <h2 class="section-title">Accédez à l'agenda sans quitter l'index</h2>
-  <p class="section-sub">Pour faciliter la navigation, le module agenda est désormais intégré directement dans la page. Vous scrollez, vous utilisez, sans changement d'onglet.</p>
-
-  <div class="module-shell">
-    <div class="module-topbar">
-      <div>
-        <div class="module-title">Hub2gether · Agenda Sportif</div>
-        <div class="module-note">Version embarquée pour consultation rapide + planification</div>
-      </div>
-      <a class="module-link" href="./hub2gether-agenda.html" target="_blank" rel="noopener">Ouvrir en plein écran ↗</a>
-    </div>
-    <iframe class="module-frame module-frame--agenda" src="./hub2gether-agenda.html" title="Agenda Hub2gether"></iframe>
-  </div>
-</section>
-
-<!-- ══════ MODULE DASHBOARD INTÉGRÉ ══════ -->
-<section class="module-showcase" id="dashboard-module">
-  <div class="section-label">
-    <div class="section-label-bar"></div>
-    <span class="section-label-text" style="color:var(--muted)">Dashboard intégré</span>
-  </div>
-  <h2 class="section-title">Dashboard RH & engagement en défilement continu</h2>
-  <p class="section-sub">Le dashboard est aussi embarqué sur la landing pour un parcours produit fluide. En production, vous pourrez remplacer cette vue par une version résumée KPI + CTA d'action.</p>
-
-  <div class="module-shell">
-    <div class="module-topbar">
-      <div>
-        <div class="module-title">Hub2gether · Dashboard / Hero Zoom</div>
-        <div class="module-note">Bloc immersif intégré ; idéal pour démonstration commerciale</div>
-      </div>
-      <a class="module-link" href="./hub2gether-hero-zoom.html" target="_blank" rel="noopener">Ouvrir en plein écran ↗</a>
-    </div>
-    <iframe class="module-frame module-frame--dashboard" src="./hub2gether-hero-zoom.html" title="Dashboard Hub2gether"></iframe>
-  </div>
-</section>
-
-<!-- ══════ 3D BALL SECTION ══════ -->
-<!--
-  ⚽ BALLE 3D — Pour activer :
-  1. Upload ton fichier ball.glb dans ce même dossier GitHub
-  2. Remplace BALL_URL ci-dessous par : './ball.glb'
-     ou par l'URL raw GitHub : 'https://raw.githubusercontent.com/TON_USER/HUB2gether/main/ball.glb'
--->
-<section class="ball-section" id="ballSection">
-  <div class="ball-canvas-wrap">
-    <canvas id="ballCanvas"></canvas>
-  </div>
-  <div class="ball-text">
-    <h2>Bouge.<br><span>Joue ensemble.</span></h2>
-    <p>Le sport comme lien naturel entre collègues, à portée de clic.</p>
-  </div>
-</section>
-
-<!-- ══════ PROBLEMS ══════ -->
-<section class="problems" id="problems">
-  <div class="section-label">
-    <div class="section-label-bar"></div>
-    <span class="section-label-text">Le problème</span>
-  </div>
-  <h2 class="section-title" style="color:#fff">Le sport en entreprise reste<br>difficile à organiser</h2>
-  <p class="section-sub">Sans outil dédié, les initiatives sportives se perdent dans les chats d'équipe et le bouche-à-oreille.</p>
