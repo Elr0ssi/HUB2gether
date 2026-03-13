@@ -334,6 +334,52 @@ nav.scrolled {
 }
 .logo-item:hover { opacity: 0.65; }
 
+/* connector hub */
+.connectors {
+  padding: 92px 6vw;
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+}
+.connectors-grid {
+  margin-top: 42px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+.connector-card {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.25s;
+}
+.connector-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 28px rgba(15,46,34,0.08);
+  border-color: rgba(15,46,34,0.2);
+}
+.connector-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.connector-desc {
+  font-size: 0.83rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.connector-link {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0a6640;
+}
+
 /* ══════════════════════════════════════════
    3D BALL SECTION
 ══════════════════════════════════════════ */
@@ -888,6 +934,7 @@ footer {
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .problems-grid, .features-grid, .testi-grid { grid-template-columns: 1fr; }
+  .connectors-grid { grid-template-columns: 1fr; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .mockup-grid { grid-template-columns: 1fr 1fr; }
   .mockup-card:nth-child(3) { display: none; }
@@ -914,6 +961,7 @@ footer {
   </div>
   <ul class="nav-links">
     <li><a href="#features">Produit</a></li>
+    <li><a href="#connectors">Connecteurs</a></li>
     <li><a href="#pricing">Tarifs</a></li>
     <li><a href="#testi">Témoignages</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -995,6 +1043,36 @@ footer {
     <div class="logo-item">ENGIE</div>
   </div>
 </div>
+
+<!-- ══════ CONNECTORS ══════ -->
+<section class="connectors" id="connectors">
+  <div class="section-label">
+    <div class="section-label-bar"></div>
+    <span class="section-label-text" style="color:var(--muted)">Connecteurs</span>
+  </div>
+  <h2 class="section-title">Un index central pour lancer<br>vos autres connecteurs</h2>
+  <p class="section-sub">Depuis cette page, vous pouvez accéder rapidement à vos modules Hub2gether et les brancher à vos usages internes.</p>
+
+  <div class="connectors-grid">
+    <article class="connector-card">
+      <h3 class="connector-name">Connecteur Agenda Sportif</h3>
+      <p class="connector-desc">Planifiez vos créneaux, filtrez par sport et visualisez les disponibilités d'équipe dans une interface dédiée.</p>
+      <a class="connector-link" href="./hub2gether-agenda.html">Ouvrir le connecteur agenda →</a>
+    </article>
+
+    <article class="connector-card">
+      <h3 class="connector-name">Connecteur Hero Zoom</h3>
+      <p class="connector-desc">Utilisez le mode Hero Zoom pour vos démonstrations visuelles, animations d'entrée et mises en avant produit.</p>
+      <a class="connector-link" href="./hub2gether-hero-zoom.html">Ouvrir le connecteur hero zoom →</a>
+    </article>
+
+    <article class="connector-card">
+      <h3 class="connector-name">Point d'entrée principal</h3>
+      <p class="connector-desc">Conservez cet index comme hub : il référence les modules disponibles et facilite la navigation inter-connecteurs.</p>
+      <a class="connector-link" href="#navbar">Revenir en haut de l'index ↑</a>
+    </article>
+  </div>
+</section>
 
 <!-- ══════ 3D BALL SECTION ══════ -->
 <!--
