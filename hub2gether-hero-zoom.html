@@ -150,6 +150,25 @@ body {
 /* ══════════════════════════════════════════
    ZOOM SCROLL SECTION — la carte arrondie
 ══════════════════════════════════════════ */
+
+
+/* embed mode for landing integration */
+body.embed-mode {
+  background: transparent;
+}
+body.embed-mode .hero-intro,
+body.embed-mode .after-zoom { display: none; }
+body.embed-mode .zoom-section {
+  height: 240vh;
+  margin-top: 0;
+}
+body.embed-mode .zoom-sticky { height: 100vh; }
+body.embed-mode .zoom-card {
+  width: 84vw;
+  min-height: 78vh;
+  border-radius: 36px;
+}
+
 .zoom-section {
   position: relative;
   /* hauteur de scroll = durée de l'animation */
@@ -572,6 +591,11 @@ body {
 <div class="after-zoom">
   <h2>↓ Suite du site ici</h2>
 </div>
+
+<script>
+var EMBED_MODE = new URLSearchParams(window.location.search).get('embed') === '1';
+if (EMBED_MODE) document.body.classList.add('embed-mode');
+</script>
 
 <script>
 (function() {
