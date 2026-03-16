@@ -580,6 +580,29 @@ body {
   transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
 }
 .toast.show { transform: translateY(0); }
+
+/* embed mode for landing integration */
+body.embed-mode {
+  background: transparent;
+  min-height: 0;
+}
+body.embed-mode .app-shell {
+  height: 520px;
+  border: 0;
+}
+body.embed-mode .sidebar,
+body.embed-mode .toast,
+body.embed-mode .modal-overlay,
+body.embed-mode .event-popup { display: none !important; }
+body.embed-mode .cal-main {
+  border: none;
+}
+body.embed-mode .cal-topbar {
+  padding: 12px 16px;
+}
+body.embed-mode .time-col { width: 54px; }
+body.embed-mode .cal-grid-wrap { padding-right: 8px; }
+
 </style>
 </head>
 <body>
@@ -814,6 +837,11 @@ body {
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
   <span id="toastMsg"></span>
 </div>
+
+<script>
+var EMBED_MODE = new URLSearchParams(window.location.search).get('embed') === '1';
+if (EMBED_MODE) document.body.classList.add('embed-mode');
+</script>
 
 <script>
 // ══════════════════════════════════════════
