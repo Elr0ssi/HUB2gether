@@ -1294,8 +1294,8 @@ footer {
 
 <!-- ══════ 3D BALL SECTION ══════ -->
 <!--
-  ⚽ BALLE 3D — Modèle GLB utilisé : './balle_de_tennis.glb'
-  (fallback sphère si le fichier n'est pas présent)
+  ⚽ BALLE 3D — Modèle GLB personnalisé : './balle_de_tennis.glb'
+  (aucun fallback visuel : utilise ton modèle perso)
 -->
 <section class="ball-section" id="ballSection">
   <div class="ball-canvas-wrap">
@@ -1783,27 +1783,28 @@ document.addEventListener('mousemove', function(e) {
   scene.add(fillLight);
 
   /* ── BALLE GLB (modèle 3D) ── */
-  var BALL_URL = './balle_de_tennis.glb';
+  var BALL_URLS = ['./balle_de_tennis.glb', './Balle_de_tennis.glb'];
 
   var ballGroup = new THREE.Group();
   scene.add(ballGroup);
 
-  function addFallbackBall() {
-    var fallbackGeo = new THREE.SphereGeometry(1.3, 96, 96);
-    var fallbackMat = new THREE.MeshStandardMaterial({
-      color: 0xcddf35,
-      roughness: 0.86,
-      metalness: 0
-    });
-    var fallbackMesh = new THREE.Mesh(fallbackGeo, fallbackMat);
-    fallbackMesh.castShadow = true;
-    ballGroup.add(fallbackMesh);
+  function showBallError() {
+    var ballInfo = section.querySelector('.ball-text p');
+    if (ballInfo) {
+      ballInfo.textContent = "Modèle 3D introuvable. Vérifie que 'balle_de_tennis.glb' est bien à la racine du projet.";
+      ballInfo.style.color = 'rgba(255,255,255,0.8)';
+    }
   }
 
-  if (window.THREE && THREE.GLTFLoader) {
+  function loadBallAt(index) {
+    if (!window.THREE || !THREE.GLTFLoader) {
+      showBallError();
+      return;
+    }
+
     var gltfLoader = new THREE.GLTFLoader();
     gltfLoader.load(
-      BALL_URL,
+      BALL_URLS[index],
       function(gltf) {
         var ballModel = gltf.scene;
 
@@ -1831,12 +1832,13 @@ document.addEventListener('mousemove', function(e) {
       },
       undefined,
       function() {
-        addFallbackBall();
+        if (index + 1 < BALL_URLS.length) loadBallAt(index + 1);
+        else showBallError();
       }
     );
-  } else {
-    addFallbackBall();
   }
+
+  loadBallAt(0);
 
   /* ── OMBRE AU SOL ── */
   var shadowGeo = new THREE.CircleGeometry(1.1, 64);
