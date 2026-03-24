@@ -331,9 +331,59 @@ nav.scrolled {
   font-size: 1rem; font-weight: 800;
   color: var(--muted); opacity: 0.38;
   letter-spacing: 0.04em;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s, transform 0.2s, color 0.2s;
+  cursor: pointer;
 }
-.logo-item:hover { opacity: 0.65; }
+.logo-item:hover,
+.logo-item.active {
+  opacity: 0.95;
+  color: var(--dark);
+  transform: translateY(-2px);
+}
+.logo-spotlight {
+  margin: 34px auto 0;
+  max-width: 960px;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 26px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 22px;
+  text-align: left;
+}
+.logo-spotlight-copy h3 {
+  font-size: 1.4rem;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin-bottom: 10px;
+}
+.logo-spotlight-copy p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.75;
+}
+.logo-spotlight-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+.logo-spotlight-stat {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px;
+}
+.logo-spotlight-stat strong {
+  display: block;
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+}
+.logo-spotlight-stat span {
+  font-size: 0.74rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
 
 /* connector hub */
 .connectors {
@@ -516,6 +566,7 @@ nav.scrolled {
 .kpi span { font-size: 0.7rem; color: var(--muted); }
 .module-frame--dashboard { height: 640px; }
 .dashboard-showcase {
+  background: var(--dark);
   padding-left: 0;
   padding-right: 0;
 }
@@ -524,6 +575,20 @@ nav.scrolled {
   padding-left: 6vw;
   padding-right: 6vw;
 }
+.dashboard-showcase .section-title { color: #fff; }
+.dashboard-showcase .section-sub { color: rgba(255,255,255,0.52); }
+.dashboard-showcase .dashboard-card {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.08);
+}
+.dashboard-showcase .dashboard-card h3 { color: #fff; }
+.dashboard-showcase .dashboard-card p { color: rgba(255,255,255,0.56); }
+.dashboard-showcase .kpi {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.08);
+}
+.dashboard-showcase .kpi strong { color: #fff; }
+.dashboard-showcase .kpi span { color: rgba(255,255,255,0.58); }
 .dashboard-embed-shell {
   margin-top: 30px;
   border-radius: 0;
@@ -531,16 +596,23 @@ nav.scrolled {
   border-right: none;
   box-shadow: none;
   overflow: visible;
+  background: var(--dark);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 .dashboard-embed-shell .module-topbar {
   padding-left: 6vw;
   padding-right: 6vw;
+  border-bottom: none;
+  background: var(--dark);
 }
 .dashboard-embed-shell .module-frame--dashboard {
-  height: 100vh;
-  min-height: 920px;
+  height: 1500px;
+  min-height: 1500px;
   width: 100%;
 }
+.dashboard-embed-shell .module-title,
+.dashboard-embed-shell .module-note { color: #fff; }
 
 /* ══════════════════════════════════════════
    3D BALL SECTION
@@ -1097,6 +1169,7 @@ footer {
   .nav-links { display: none; }
   .problems-grid, .features-grid, .testi-grid { grid-template-columns: 1fr; }
   .connectors-grid { grid-template-columns: 1fr; }
+  .logo-spotlight { grid-template-columns: 1fr; }
   .agenda-split, .dashboard-grid { grid-template-columns: 1fr; }
   .agenda-copy { padding: 24px; }
   .agenda-panel .module-frame { height: 460px; }
@@ -1104,7 +1177,7 @@ footer {
   .dashboard-showcase .module-head,
   .dashboard-showcase .dashboard-grid,
   .dashboard-embed-shell .module-topbar { padding-left: 6vw; padding-right: 6vw; }
-  .dashboard-embed-shell .module-frame--dashboard { min-height: 760px; }
+  .dashboard-embed-shell .module-frame--dashboard { min-height: 1200px; height: 1200px; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .mockup-grid { grid-template-columns: 1fr 1fr; }
   .mockup-card:nth-child(3) { display: none; }
@@ -1206,12 +1279,24 @@ footer {
 <div class="logo-band">
   <p>Déjà adopté par des équipes ambitieuses</p>
   <div class="logo-band-row">
-    <div class="logo-item">ACCENTURE</div>
-    <div class="logo-item">DECATHLON</div>
-    <div class="logo-item">VEOLIA</div>
-    <div class="logo-item">SANOFI</div>
-    <div class="logo-item">CAPGEMINI</div>
-    <div class="logo-item">ENGIE</div>
+    <div class="logo-item active" data-company="accenture">ACCENTURE</div>
+    <div class="logo-item" data-company="decathlon">DECATHLON</div>
+    <div class="logo-item" data-company="veolia">VEOLIA</div>
+    <div class="logo-item" data-company="sanofi">SANOFI</div>
+    <div class="logo-item" data-company="capgemini">CAPGEMINI</div>
+    <div class="logo-item" data-company="engie">ENGIE</div>
+  </div>
+  <div class="logo-spotlight" id="logoSpotlight">
+    <div class="logo-spotlight-copy">
+      <h3 id="logoSpotlightTitle">Accenture · activer les communautés multi-sites</h3>
+      <p id="logoSpotlightText">Déploiement sur plusieurs bureaux pour connecter les consultants autour de ligues inter-équipes, d’un onboarding sportif et d’indicateurs RH consolidés.</p>
+    </div>
+    <div class="logo-spotlight-stats">
+      <div class="logo-spotlight-stat"><strong id="logoStat1">4 200</strong><span id="logoStat1Label">salariés concernés</span></div>
+      <div class="logo-spotlight-stat"><strong id="logoStat2">+31%</strong><span id="logoStat2Label">taux de participation</span></div>
+      <div class="logo-spotlight-stat"><strong id="logoStat3">12</strong><span id="logoStat3Label">sites interconnectés</span></div>
+      <div class="logo-spotlight-stat"><strong id="logoStat4">94%</strong><span id="logoStat4Label">satisfaction collaborateurs</span></div>
+    </div>
   </div>
 </div>
 
@@ -1717,6 +1802,74 @@ function animateCounter(el) {
   requestAnimationFrame(step);
 }
 
+// ─── Social proof spotlight ───
+var COMPANY_SPOTLIGHTS = {
+  accenture: {
+    title: 'Accenture · activer les communautés multi-sites',
+    text: 'Déploiement sur plusieurs bureaux pour connecter les consultants autour de ligues inter-équipes, d’un onboarding sportif et d’indicateurs RH consolidés.',
+    stats: [['4 200', 'salariés concernés'], ['+31%', 'taux de participation'], ['12', 'sites interconnectés'], ['94%', 'satisfaction collaborateurs']]
+  },
+  decathlon: {
+    title: 'Decathlon · staff retail & clubs partenaires',
+    text: 'Pilotage d’un programme staff magasin + sièges pour animer les communautés locales, monétiser des créneaux partenaires et activer les subventions sport-santé.',
+    stats: [['1 850', 'salariés actifs'], ['26', 'partenariats locaux'], ['58k€', 'gains / subventions'], ['2,7x', 'fréquence mensuelle']]
+  },
+  veolia: {
+    title: 'Veolia · cohésion terrain / siège',
+    text: 'Le programme relie agents terrain et fonctions support via des formats simples : running, football, padel et challenges inter-sites hebdomadaires.',
+    stats: [['87%', 'taux de rétention'], ['9', 'sites engagés'], ['+18%', 'nouvelles recrues onboardées'], ['41', 'groupes sportifs']]
+  },
+  sanofi: {
+    title: 'Sanofi · QVT & prévention santé',
+    text: 'Mesure des usages, prévention des risques et activation d’événements santé pour améliorer la qualité de vie au travail et la récurrence d’activité.',
+    stats: [['92%', 'adhésion à 90 jours'], ['34k€', 'budget capté'], ['+22%', 'fréquence des joueurs'], ['14', 'partenariats santé']]
+  },
+  capgemini: {
+    title: 'Capgemini · engagement consultant',
+    text: 'Hub2gether aligne onboarding, staffing communautaire et tournois internes pour générer plus de rencontres entre collaborateurs de practices différentes.',
+    stats: [['3 100', 'collaborateurs suivis'], ['+29%', 'participation'], ['17', 'ligues actives'], ['89%', 'nouveaux salariés engagés']]
+  },
+  engie: {
+    title: 'Engie · performance & marque employeur',
+    text: 'Le dashboard permet de piloter les temps forts sportifs, la visibilité des partenaires et l’impact marque employeur par site et par population.',
+    stats: [['11', 'partenaires actifs'], ['63k€', 'subventions générées'], ['95%', 'satisfaction'], ['7', 'tops hebdomadaires / mois']]
+  }
+};
+
+function initCompanySpotlight() {
+  var items = Array.prototype.slice.call(document.querySelectorAll('.logo-item[data-company]'));
+  if (!items.length) return;
+  var title = document.getElementById('logoSpotlightTitle');
+  var text = document.getElementById('logoSpotlightText');
+  var statNodes = [
+    [document.getElementById('logoStat1'), document.getElementById('logoStat1Label')],
+    [document.getElementById('logoStat2'), document.getElementById('logoStat2Label')],
+    [document.getElementById('logoStat3'), document.getElementById('logoStat3Label')],
+    [document.getElementById('logoStat4'), document.getElementById('logoStat4Label')]
+  ];
+
+  function renderCompany(key) {
+    var company = COMPANY_SPOTLIGHTS[key];
+    if (!company) return;
+    items.forEach(function(item) {
+      item.classList.toggle('active', item.getAttribute('data-company') === key);
+    });
+    title.textContent = company.title;
+    text.textContent = company.text;
+    company.stats.forEach(function(stat, idx) {
+      if (!statNodes[idx]) return;
+      statNodes[idx][0].textContent = stat[0];
+      statNodes[idx][1].textContent = stat[1];
+    });
+  }
+
+  items.forEach(function(item) {
+    item.addEventListener('mouseenter', function() { renderCompany(item.getAttribute('data-company')); });
+    item.addEventListener('click', function() { renderCompany(item.getAttribute('data-company')); });
+  });
+}
+initCompanySpotlight();
+
 // ─── Pricing carousel ───
 (function() {
   var track    = document.getElementById('pricingTrack');
@@ -1818,12 +1971,25 @@ document.addEventListener('mousemove', function(e) {
   var ballGroup = new THREE.Group();
   scene.add(ballGroup);
 
+  function addFallbackBall() {
+    var fallbackGeo = new THREE.SphereGeometry(1.28, 96, 96);
+    var fallbackMat = new THREE.MeshStandardMaterial({
+      color: 0xc8dc38,
+      roughness: 0.86,
+      metalness: 0
+    });
+    var fallbackMesh = new THREE.Mesh(fallbackGeo, fallbackMat);
+    fallbackMesh.castShadow = true;
+    ballGroup.add(fallbackMesh);
+  }
+
   function showBallError() {
     var ballInfo = section.querySelector('.ball-text p');
     if (ballInfo) {
       ballInfo.textContent = "Modèle 3D introuvable. Vérifie que 'balle_de_tennis.glb' est bien à la racine du projet.";
       ballInfo.style.color = 'rgba(255,255,255,0.8)';
     }
+    if (!ballGroup.children.length) addFallbackBall();
   }
 
   function loadBallAt(index) {
