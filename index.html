@@ -1483,41 +1483,20 @@ footer {
 
 <!-- ══════ MODULE DASHBOARD INTÉGRÉ ══════ -->
 <section class="module-showcase dashboard-showcase" id="dashboard-module">
-  <div class="module-head">
-    <div class="section-label">
-      <div class="section-label-bar"></div>
-      <span class="section-label-text" style="color:var(--muted)">Dashboard intégré</span>
-    </div>
-    <h2 class="section-title">Le dashboard RH s'intègre comme une section produit</h2>
-    <p class="section-sub">Cette section mélange storytelling + KPI opérationnels avant d'afficher le dashboard complet, pour un enchaînement naturel avec le reste de la landing.</p>
-  </div>
-
-  <div class="dashboard-grid">
-    <article class="dashboard-card">
-      <h3>Pilotage RH en continu</h3>
-      <p>Suivez l'engagement sportif, la rétention des groupes et la fréquence des événements depuis une vue unique exploitable en comité RH.</p>
-      <div class="kpi-row">
-        <div class="kpi"><strong>+37%</strong><span>Participation</span></div>
-        <div class="kpi"><strong>82%</strong><span>Profils actifs</span></div>
-        <div class="kpi"><strong>5,4</strong><span>Evts / sem.</span></div>
+  <div class="dashboard-reveal-wrap" id="dashboardRevealWrap">
+    <div class="dashboard-reveal-sticky">
+      <div class="dashboard-reveal-shell">
+        <div class="module-shell dashboard-embed-shell">
+          <div class="module-topbar">
+            <div>
+              <div class="module-title">Hub2gether · Dashboard exécutif</div>
+              <div class="module-note">Version déroulante immersive intégrée à la landing</div>
+            </div>
+          </div>
+          <iframe class="module-frame module-frame--dashboard" src="./hub2gether-hero-zoom.html?embed=1" title="Dashboard Hub2gether"></iframe>
+        </div>
       </div>
-    </article>
-    <article class="dashboard-card">
-      <h3>Actions recommandées</h3>
-      <p>Le module met en avant les équipes peu actives, les sports en croissance et les créneaux à fort potentiel pour booster l'adoption.</p>
-      
-    </article>
-  </div>
-
-  <div class="module-shell dashboard-embed-shell">
-    <div class="module-topbar">
-      <div>
-        <div class="module-title">Hub2gether · Dashboard exécutif</div>
-        <div class="module-note">Section immersive plein cadre intégrée directement dans la landing</div>
-      </div>
-      
     </div>
-    <iframe class="module-frame module-frame--dashboard" src="./hub2gether-hero-zoom.html?embed=1" title="Dashboard Hub2gether"></iframe>
   </div>
 </section>
 
@@ -1898,6 +1877,17 @@ document.querySelectorAll('.stat-block').forEach(function(el, i) {
   el.setAttribute('data-delay', i * 80);
   revealObs.observe(el);
 });
+
+// ─── Dashboard reveal (scroll-only block) ───
+var dashboardRevealWrap = document.getElementById('dashboardRevealWrap');
+if (dashboardRevealWrap) {
+  var dashboardRevealObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      dashboardRevealWrap.classList.toggle('is-visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.45 });
+  dashboardRevealObs.observe(dashboardRevealWrap);
+}
 
 // ─── Counter animation ───
 function animateCounter(el) {
