@@ -515,6 +515,32 @@ nav.scrolled {
 .kpi strong { display:block; font-size: 1.25rem; }
 .kpi span { font-size: 0.7rem; color: var(--muted); }
 .module-frame--dashboard { height: 640px; }
+.dashboard-showcase {
+  padding-left: 0;
+  padding-right: 0;
+}
+.dashboard-showcase .module-head,
+.dashboard-showcase .dashboard-grid {
+  padding-left: 6vw;
+  padding-right: 6vw;
+}
+.dashboard-embed-shell {
+  margin-top: 30px;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  box-shadow: none;
+  overflow: visible;
+}
+.dashboard-embed-shell .module-topbar {
+  padding-left: 6vw;
+  padding-right: 6vw;
+}
+.dashboard-embed-shell .module-frame--dashboard {
+  height: 100vh;
+  min-height: 920px;
+  width: 100%;
+}
 
 /* ══════════════════════════════════════════
    3D BALL SECTION
@@ -1075,6 +1101,10 @@ footer {
   .agenda-copy { padding: 24px; }
   .agenda-panel .module-frame { height: 460px; }
   .module-frame--dashboard { height: 520px; }
+  .dashboard-showcase .module-head,
+  .dashboard-showcase .dashboard-grid,
+  .dashboard-embed-shell .module-topbar { padding-left: 6vw; padding-right: 6vw; }
+  .dashboard-embed-shell .module-frame--dashboard { min-height: 760px; }
   .stats-row { grid-template-columns: 1fr 1fr; }
   .mockup-grid { grid-template-columns: 1fr 1fr; }
   .mockup-card:nth-child(3) { display: none; }
@@ -1253,7 +1283,7 @@ footer {
 </section>
 
 <!-- ══════ MODULE DASHBOARD INTÉGRÉ ══════ -->
-<section class="module-showcase" id="dashboard-module">
+<section class="module-showcase dashboard-showcase" id="dashboard-module">
   <div class="module-head">
     <div class="section-label">
       <div class="section-label-bar"></div>
@@ -1280,11 +1310,11 @@ footer {
     </article>
   </div>
 
-  <div class="module-shell">
+  <div class="module-shell dashboard-embed-shell">
     <div class="module-topbar">
       <div>
-        <div class="module-title">Hub2gether · Dashboard</div>
-        <div class="module-note">Vue embarquée dans la landing</div>
+        <div class="module-title">Hub2gether · Dashboard exécutif</div>
+        <div class="module-note">Section immersive plein cadre intégrée directement dans la landing</div>
       </div>
       
     </div>
