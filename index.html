@@ -1,459 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hub2gether — Enterprise Dashboard</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #eef2f5;
-      --panel: #ffffff;
-      --line: #dce3eb;
-      --text: #0f172a;
-      --muted: #64748b;
-      --mint: #77e0b3;
-      --mint-dark: #13a06d;
-      --blue: #3b82f6;
-      --radius: 18px;
-      --shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hub2gether — React SaaS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      :root { --bg:#eff3f6; --panel:#fff; --line:#dbe4ed; --text:#0f172a; --muted:#64748b; --mint:#77e0b3; }
+      *{box-sizing:border-box} body{margin:0;font-family:Inter,sans-serif;background:var(--bg);color:var(--text)}
+      .container{max-width:1280px;margin:0 auto;padding:18px}
+      .top{position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);z-index:40}
+      .top-in{max-width:1280px;margin:0 auto;padding:10px 18px;display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+      .brand{font-weight:800;display:flex;align-items:center;gap:10px}.logo{width:34px;height:34px;border-radius:10px;background:#e7fbf2;display:grid;place-items:center;color:#169d6e}
+      .search{display:flex;gap:8px;align-items:center;border:1px solid var(--line);background:#f8fafc;border-radius:999px;padding:10px 14px}
+      .search input{border:none;background:transparent;outline:none;width:100%;font:inherit}
+      .btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 11px;font-weight:700;cursor:pointer}
+      .hero{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:6px 0 14px}.hero h1{margin:0;font-size:clamp(26px,3vw,38px)}
+      .hero p{margin:5px 0 0;color:var(--muted)} .tabs{display:flex;gap:6px;background:#e8eff5;padding:5px;border-radius:999px}
+      .tab{border:0;background:transparent;padding:7px 12px;border-radius:999px;font-weight:700;cursor:pointer}.tab.active{background:#dcfce7;color:#15803d}
+      .grid4,.grid3,.grid2,.main{display:grid;gap:14px;margin-bottom:14px}.grid4{grid-template-columns:repeat(4,1fr)}.main{grid-template-columns:1.15fr 2.1fr}.grid3{grid-template-columns:repeat(3,1fr)}.grid2{grid-template-columns:repeat(2,1fr)}
+      .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:0 6px 20px rgba(15,23,42,.04)}
+      .click{cursor:pointer;transition:.2s}.click:hover{transform:translateY(-2px);box-shadow:0 18px 30px rgba(15,23,42,.09)}
+      .kpi-h{display:flex;justify-content:space-between;align-items:center}.icon{width:38px;height:38px;border-radius:50%;background:#ecfdf5;color:#059669;display:grid;place-items:center}
+      .k-label{font-size:13px;color:var(--muted);margin:10px 0 0}.k-value{font-size:clamp(26px,2.6vw,34px);font-weight:800;margin:4px 0 0}
+      .up{font-size:13px;font-weight:700;color:#0ea56e}.section-title{margin:0 0 12px;font-size:24px}
+      .donut{width:210px;height:210px;border-radius:50%;margin:0 auto 14px;background:conic-gradient(#77e0b3 0 35%,#22c55e 35% 60%,#facc15 60% 80%,#a78bfa 80% 100%);display:grid;place-items:center}
+      .donut>span{width:138px;height:138px;border-radius:50%;background:#fff;display:grid;place-content:center;text-align:center;font-weight:800;font-size:30px;line-height:1.2}
+      .legend{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;color:var(--muted);font-size:13px}.dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:6px}
+      .bars{height:220px;display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end}.bar-wrap{text-align:center;font-size:11px;color:var(--muted);font-weight:700}.bar{border-radius:10px;background:#d9e3ec;margin-bottom:6px}
+      .group-t{display:flex;justify-content:space-between;align-items:center}.tag{font-size:11px;font-weight:700;padding:5px 9px;border-radius:999px}.green{background:#dcfce7;color:#15803d}.orange{background:#fef3c7;color:#b45309}
+      .name{font-size:21px;font-weight:800;margin:10px 0 4px}.desc{margin:0;color:var(--muted);font-size:14px}.meta{margin-top:10px;font-size:12px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap}
+      .track{height:10px;background:#e7edf3;border-radius:999px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#77e0b3,#52ca97)}
+      .event{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px;border:1px solid #e2e8f0;border-radius:12px;background:#f8fafc;margin-bottom:9px}.status{font-size:10px;font-weight:800;padding:6px 8px;border-radius:999px}.past{background:#e2e8f0;color:#64748b}.upcoming{background:#dcfce7;color:#15803d}
+      .toast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#0f172a;color:#e2e8f0;padding:10px 14px;border-radius:999px;font-size:13px;z-index:120}
+      .landing{max-width:980px;margin:72px auto 0;text-align:center}.landing h1{font-size:clamp(32px,6vw,56px);margin:0 0 12px}.landing p{color:var(--muted);font-size:18px;line-height:1.7}
+      .cta{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:24px}.cta a{padding:12px 18px;border-radius:999px;font-weight:700;text-decoration:none}
+      .cta .primary{background:#0f172a;color:#dcfce7}.cta .ghost{border:1px solid var(--line);color:#0f172a;background:#fff}
+      @media (max-width:1100px){.grid4,.grid3{grid-template-columns:repeat(2,1fr)}.main,.grid2{grid-template-columns:1fr}}
+      @media (max-width:760px){.top-in{grid-template-columns:1fr}.hero{flex-direction:column;align-items:flex-start}.grid4,.grid3{grid-template-columns:1fr}}
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import React, { useMemo, useState } from 'https://esm.sh/react@18.3.1';
+      import { createRoot } from 'https://esm.sh/react-dom@18.3.1/client';
 
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Inter', sans-serif;
-      background: radial-gradient(circle at 0% 0%, #f8fffc 0, var(--bg) 40%);
-      color: var(--text);
-    }
+      const KPI = {
+        weekly: { employees:'1,182', employeesDelta:'+3%', groups:'39', groupsDelta:'+2%', matches:'41', matchesDelta:'+4%', events:'5', eventsDelta:'+1%' },
+        monthly:{ employees:'1,240', employeesDelta:'+12%', groups:'42', groupsDelta:'+5%', matches:'156', matchesDelta:'+8%', events:'14', eventsDelta:'0%' },
+        yearly: { employees:'1,398', employeesDelta:'+21%', groups:'58', groupsDelta:'+12%', matches:'1,842', matchesDelta:'+18%', events:'96', eventsDelta:'+11%' }
+      };
 
-    .top-nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(255, 255, 255, 0.9);
-      border-bottom: 1px solid var(--line);
-      backdrop-filter: blur(12px);
-    }
+      function Dashboard() {
+        const [period,setPeriod]=useState('monthly');
+        const [q,setQ]=useState('');
+        const [toast,setToast]=useState('');
+        const data=KPI[period];
+        const show=(m)=>{setToast(m);setTimeout(()=>setToast(''),1600)};
 
-    .top-nav-inner {
-      max-width: 1300px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 14px;
-      align-items: center;
-      padding: 10px 18px;
-    }
+        const groups=[
+          {name:'Padel Team',desc:'Intermediate and pro matches',meta:'342 members • 12 matches/mo',tag:'HIGH ACTIVITY',tone:'green',icon:'🎾'},
+          {name:'Morning Runners',desc:'Daily 5km around the park',meta:'156 members • 20 sessions/mo',tag:'HIGH ACTIVITY',tone:'green',icon:'🏃'},
+          {name:'Football Club',desc:'Weekly mixed football games',meta:'89 members • 4 matches/mo',tag:'MEDIUM ACTIVITY',tone:'orange',icon:'⚽'}
+        ];
+        const events=[
+          {name:'Hub2gether vs. Stripe',date:'Oct 15, 2024',status:'Past'},
+          {name:'Hub2gether vs. Google',date:'Nov 12, 2024',status:'Upcoming'},
+          {name:'Hub2gether vs. Slack',date:'Nov 20, 2024',status:'Upcoming'},
+          {name:'Hub2gether vs. Datadog',date:'Dec 04, 2024',status:'Upcoming'}
+        ];
+        const filteredGroups=useMemo(()=>groups.filter(g=>(g.name+g.desc).toLowerCase().includes(q.toLowerCase())),[q]);
+        const filteredEvents=useMemo(()=>events.filter(e=>(e.name+e.date).toLowerCase().includes(q.toLowerCase())),[q]);
 
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .brand-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(145deg, #d7f8ea, #e8fff4);
-      color: var(--mint-dark);
-      box-shadow: inset 0 0 0 1px #bcefd8;
-    }
-
-    .search-wrap {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: #f8fafc;
-    }
-
-    #searchInput {
-      width: 100%;
-      border: none;
-      background: transparent;
-      font: inherit;
-      color: #334155;
-      outline: none;
-    }
-
-    .top-actions { display: flex; gap: 8px; }
-
-    .icon-btn {
-      border: 1px solid var(--line);
-      background: #fff;
-      border-radius: 10px;
-      padding: 8px 10px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #334155;
-      cursor: pointer;
-      transition: .2s;
-    }
-
-    .icon-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
-
-    .app {
-      max-width: 1300px;
-      margin: 0 auto;
-      padding: 20px 18px 40px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.2fr auto;
-      gap: 14px;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .hero h1 { margin: 0; font-size: clamp(26px, 3vw, 40px); letter-spacing: -0.02em; }
-    .hero p { margin: 6px 0 0; color: var(--muted); }
-
-    .tabs {
-      display: flex;
-      gap: 6px;
-      background: #eaf0f5;
-      border-radius: 999px;
-      padding: 5px;
-    }
-
-    .tab {
-      border: none;
-      background: transparent;
-      border-radius: 999px;
-      padding: 8px 13px;
-      cursor: pointer;
-      font-weight: 700;
-      color: #475569;
-    }
-
-    .tab.active { background: #dcfce7; color: #15803d; }
-
-    .grid-4, .grid-3, .grid-2, .grid-main {
-      display: grid;
-      gap: 14px;
-      margin-bottom: 14px;
-    }
-
-    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .grid-main { grid-template-columns: 1.15fr 2.1fr; }
-    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.04);
-      transition: 0.2s;
-    }
-
-    .clickable { cursor: pointer; }
-    .clickable:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: #c6d3e1; }
-
-    .kpi-head { display: flex; justify-content: space-between; align-items: center; }
-    .badge {
-      width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
-      background: #ecfdf5; color: #10b981; font-size: 17px;
-    }
-
-    .kpi-label { margin: 10px 0 0; color: #64748b; font-size: 13px; }
-    .kpi-value { margin: 4px 0 0; font-size: clamp(26px, 2.6vw, 34px); font-weight: 800; }
-    .up { color: #0ea56e; font-weight: 700; font-size: 13px; }
-
-    .section-title { margin: 2px 0 12px; font-size: 25px; letter-spacing: -0.02em; }
-
-    .donut {
-      width: 210px; height: 210px; border-radius: 50%;
-      background: conic-gradient(var(--mint) 0 35%, #22c55e 35% 60%, #facc15 60% 80%, #a78bfa 80% 100%);
-      margin: 6px auto 14px;
-      display: grid; place-items: center;
-      position: relative;
-    }
-
-    .donut::after {
-      content: attr(data-main) "\A" attr(data-sub);
-      white-space: pre;
-      width: 138px; height: 138px; border-radius: 50%;
-      background: #fff;
-      display: grid; place-content: center;
-      text-align: center;
-      font-weight: 800;
-      line-height: 1.2;
-      font-size: 29px;
-    }
-
-    .legend { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; color: #64748b; font-size: 13px; }
-    .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; }
-
-    .bars { height: 228px; display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; align-items: end; }
-    .bar-wrap { text-align: center; color: #64748b; font-size: 11px; font-weight: 700; }
-    .bar { border-radius: 10px; width: 100%; margin-bottom: 5px; background: #dbe4ed; }
-
-    .group-top { display: flex; justify-content: space-between; align-items: center; }
-    .tag { font-size: 11px; padding: 5px 9px; border-radius: 999px; font-weight: 700; }
-    .tag.green { background: #dcfce7; color: #15803d; }
-    .tag.orange { background: #fef3c7; color: #b45309; }
-    .name { margin: 10px 0 4px; font-size: 21px; font-weight: 800; }
-    .desc { color: var(--muted); margin: 0; font-size: 14px; }
-    .meta { margin-top: 10px; color: #64748b; font-size: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
-
-    .impact { background: linear-gradient(160deg, #f6fff9, #eefcf4); }
-    .impact-label { text-transform: uppercase; color: #64748b; font-size: 11px; font-weight: 700; margin: 0; }
-    .impact-value { margin: 6px 0 4px; font-size: 33px; font-weight: 800; }
-    .impact-note { margin: 0; color: #64748b; font-size: 12px; }
-
-    .dept { margin-bottom: 14px; }
-    .dept-head { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px; font-weight: 700; }
-    .track { height: 10px; border-radius: 999px; overflow: hidden; background: #e7edf3; }
-    .fill { height: 100%; background: linear-gradient(90deg, #77e0b3, #52ca97); width: 0; transition: width .9s ease; }
-
-    .event { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px; border: 1px solid #e2e8f0; border-radius: 12px; background:#f8fafc; margin-bottom:10px; }
-    .event:last-child { margin-bottom: 0; }
-    .event h4 { margin: 0; font-size: 15px; }
-    .event p { margin: 3px 0 0; font-size: 12px; color: var(--muted); }
-    .status { font-size: 10px; font-weight: 800; border-radius: 999px; padding: 6px 9px; text-transform: uppercase; }
-    .status.upcoming { background: #dcfce7; color: #15803d; }
-    .status.past { background: #e2e8f0; color: #64748b; }
-
-    .quick-actions {
-      position: fixed;
-      right: 14px;
-      bottom: 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      z-index: 120;
-    }
-
-    .floating-btn {
-      border: none;
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: #111827;
-      color: #d1fae5;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: var(--shadow);
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      bottom: 18px;
-      background: #0f172a;
-      color: #e2e8f0;
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-size: 13px;
-      opacity: 0;
-      transition: .25s;
-      z-index: 140;
-    }
-
-    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    @media (max-width: 1150px) {
-      .grid-4, .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .grid-main, .grid-2 { grid-template-columns: 1fr; }
-    }
-
-    @media (max-width: 760px) {
-      .top-nav-inner { grid-template-columns: 1fr; }
-      .top-actions { justify-content: flex-end; }
-      .hero { grid-template-columns: 1fr; }
-      .grid-4, .grid-3 { grid-template-columns: 1fr; }
-      .quick-actions { right: 8px; bottom: 8px; }
-    }
-  </style>
-</head>
-<body>
-  <header class="top-nav">
-    <div class="top-nav-inner">
-      <div class="brand"><span class="brand-mark">✣</span>Hub2gether Admin</div>
-      <label class="search-wrap" aria-label="Recherche dashboard">
-        🔎
-        <input id="searchInput" type="text" placeholder="Rechercher équipes, événements, départements..." />
-      </label>
-      <div class="top-actions">
-        <button class="icon-btn" id="notifyBtn">🔔 Alertes</button>
-        <button class="icon-btn" id="themeBtn">🎨 Thème</button>
-      </div>
-    </div>
-  </header>
-
-  <main class="app">
-    <section class="hero">
-      <div>
-        <h1>HR Performance Dashboard</h1>
-        <p>Dashboard entreprise complet, interactif et entièrement cliquable pour la démo.</p>
-      </div>
-      <div class="tabs" id="periodTabs">
-        <button class="tab" data-period="weekly">Weekly</button>
-        <button class="tab active" data-period="monthly">Monthly</button>
-        <button class="tab" data-period="yearly">Yearly</button>
-      </div>
-    </section>
-
-    <section class="grid-4" id="kpiGrid">
-      <article class="card clickable" data-click="Employés actifs"><div class="kpi-head"><span class="badge">👥</span><span class="up" data-kpi="employeesDelta">+12%</span></div><p class="kpi-label">Active Employees</p><p class="kpi-value" data-kpi="employees">1,240</p></article>
-      <article class="card clickable" data-click="Groupes sportifs"><div class="kpi-head"><span class="badge">⚽</span><span class="up" data-kpi="groupsDelta">+5%</span></div><p class="kpi-label">Sports Groups</p><p class="kpi-value" data-kpi="groups">42</p></article>
-      <article class="card clickable" data-click="Matchs mensuels"><div class="kpi-head"><span class="badge">✅</span><span class="up" data-kpi="matchesDelta">+8%</span></div><p class="kpi-label">Matches This Month</p><p class="kpi-value" data-kpi="matches">156</p></article>
-      <article class="card clickable" data-click="Événements à venir"><div class="kpi-head"><span class="badge">📅</span><span class="up" style="color:#9ca3af" data-kpi="eventsDelta">0%</span></div><p class="kpi-label">Upcoming Events</p><p class="kpi-value" data-kpi="events">14</p></article>
-    </section>
-
-    <section class="grid-main">
-      <article class="card clickable" data-click="Répartition sportive">
-        <h2 class="section-title">Sports Distribution</h2>
-        <div class="donut" id="donut" data-main="35%" data-sub="Padel lead"></div>
-        <div class="legend">
-          <span><i class="dot" style="background:#77e0b3"></i>Padel (35%)</span>
-          <span><i class="dot" style="background:#22c55e"></i>Football (25%)</span>
-          <span><i class="dot" style="background:#facc15"></i>Running (20%)</span>
-          <span><i class="dot" style="background:#a78bfa"></i>Tennis (15%)</span>
-        </div>
-      </article>
-
-      <article class="card clickable" data-click="Participation hebdo">
-        <h2 class="section-title">Weekly Participation</h2>
-        <div class="bars" id="bars">
-          <div class="bar-wrap"><div class="bar" style="height:120px;background:#d2f2e2"></div>MON</div>
-          <div class="bar-wrap"><div class="bar" style="height:155px;background:#d9f1e4"></div>TUE</div>
-          <div class="bar-wrap"><div class="bar" style="height:205px;background:#77e0b3"></div>WED</div>
-          <div class="bar-wrap"><div class="bar" style="height:175px;background:#d9f1e4"></div>THU</div>
-          <div class="bar-wrap"><div class="bar" style="height:132px;background:#e8f6ee"></div>FRI</div>
-          <div class="bar-wrap"><div class="bar" style="height:188px"></div>SAT</div>
-          <div class="bar-wrap"><div class="bar" style="height:171px"></div>SUN</div>
-        </div>
-      </article>
-    </section>
-
-    <section class="card">
-      <h2 class="section-title">Popular Sports Groups</h2>
-      <div class="grid-3" id="groupsList">
-        <article class="card clickable group-item" data-search="padel"><div class="group-top"><span class="badge" style="background:#eef2ff;color:#6366f1">🎾</span><span class="tag green">HIGH ACTIVITY</span></div><p class="name">Padel Team</p><p class="desc">Intermediate and pro matches</p><div class="meta"><span>👤 342 members</span><span>📆 12 matches/mo</span></div></article>
-        <article class="card clickable group-item" data-search="running"><div class="group-top"><span class="badge" style="background:#fff7ed;color:#ea580c">🏃</span><span class="tag green">HIGH ACTIVITY</span></div><p class="name">Morning Runners</p><p class="desc">Daily 5km around the park</p><div class="meta"><span>👤 156 members</span><span>📆 20 sessions/mo</span></div></article>
-        <article class="card clickable group-item" data-search="football"><div class="group-top"><span class="badge" style="background:#eff6ff;color:#2563eb">⚽</span><span class="tag orange">MEDIUM ACTIVITY</span></div><p class="name">Football Club</p><p class="desc">Weekly mixed football games</p><div class="meta"><span>👤 89 members</span><span>📆 4 matches/mo</span></div></article>
-      </div>
-    </section>
-
-    <section class="grid-4">
-      <article class="card impact clickable" data-click="Dépenses sport"><p class="impact-label">Total Sports Expenses</p><p class="impact-value">$12,400</p><p class="impact-note">Budget utilization: 84%</p></article>
-      <article class="card impact clickable" data-click="Coût moyen"><p class="impact-label">Avg. Cost per Employee</p><p class="impact-value">$10.00</p><p class="impact-note" style="color:#10b981">Down 4% from last month</p></article>
-      <article class="card impact clickable" data-click="Économies"><p class="impact-label">Company Savings</p><p class="impact-value">$2,500</p><p class="impact-note">Via bulk booking deals</p></article>
-      <article class="card impact clickable" data-click="Subventions"><p class="impact-label">Subsidies Used</p><p class="impact-value">782</p><p class="impact-note">Vouchers claimed this month</p></article>
-    </section>
-
-    <section class="grid-2">
-      <article class="card clickable" data-click="Participation par département">
-        <h2 class="section-title">Top Departments Participation</h2>
-        <div class="dept"><div class="dept-head"><span>Marketing</span><span>82%</span></div><div class="track"><div class="fill" data-width="82"></div></div></div>
-        <div class="dept"><div class="dept-head"><span>Sales</span><span>75%</span></div><div class="track"><div class="fill" data-width="75"></div></div></div>
-        <div class="dept"><div class="dept-head"><span>Engineering</span><span>68%</span></div><div class="track"><div class="fill" data-width="68"></div></div></div>
-        <div class="dept"><div class="dept-head"><span>R&amp;D</span><span>64%</span></div><div class="track"><div class="fill" data-width="64"></div></div></div>
-      </article>
-
-      <article class="card">
-        <h2 class="section-title">Inter-Company Events</h2>
-        <div id="eventsList">
-          <div class="event clickable event-item" data-search="stripe"><div><h4>Hub2gether vs. Stripe</h4><p>Oct 15, 2024</p></div><span class="status past">Past</span></div>
-          <div class="event clickable event-item" data-search="google"><div><h4>Hub2gether vs. Google</h4><p>Nov 12, 2024</p></div><span class="status upcoming">Upcoming</span></div>
-          <div class="event clickable event-item" data-search="slack"><div><h4>Hub2gether vs. Slack</h4><p>Nov 20, 2024</p></div><span class="status upcoming">Upcoming</span></div>
-          <div class="event clickable event-item" data-search="datadog"><div><h4>Hub2gether vs. Datadog</h4><p>Dec 04, 2024</p></div><span class="status upcoming">Upcoming</span></div>
-        </div>
-      </article>
-    </section>
-  </main>
-
-  <div class="quick-actions">
-    <button class="floating-btn" id="exportBtn">⬇ Export KPI</button>
-    <button class="floating-btn" id="meetingBtn">📅 Planifier une démo</button>
-  </div>
-  <div class="toast" id="toast"></div>
-
-  <script>
-    const datasets = {
-      weekly: { employees: '1,182', employeesDelta: '+3%', groups: '39', groupsDelta: '+2%', matches: '41', matchesDelta: '+4%', events: '5', eventsDelta: '+1%' },
-      monthly: { employees: '1,240', employeesDelta: '+12%', groups: '42', groupsDelta: '+5%', matches: '156', matchesDelta: '+8%', events: '14', eventsDelta: '0%' },
-      yearly: { employees: '1,398', employeesDelta: '+21%', groups: '58', groupsDelta: '+12%', matches: '1,842', matchesDelta: '+18%', events: '96', eventsDelta: '+11%' }
-    };
-
-    const toast = document.getElementById('toast');
-    const showToast = (msg) => {
-      toast.textContent = msg;
-      toast.classList.add('show');
-      clearTimeout(window.toastTimer);
-      window.toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
-    };
-
-    document.querySelectorAll('.clickable').forEach((el) => {
-      el.addEventListener('click', () => showToast('Ouverture: ' + (el.dataset.click || 'détail')));
-    });
-
-    document.getElementById('notifyBtn').addEventListener('click', () => showToast('3 nouvelles alertes RH détectées'));
-    document.getElementById('exportBtn').addEventListener('click', () => showToast('Export CSV lancé (démo)'));
-    document.getElementById('meetingBtn').addEventListener('click', () => showToast('Création d\'un créneau de démo...'));
-
-    const periodTabs = document.getElementById('periodTabs');
-    periodTabs.addEventListener('click', (event) => {
-      const tab = event.target.closest('.tab');
-      if (!tab) return;
-      periodTabs.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-      const data = datasets[tab.dataset.period];
-      Object.entries(data).forEach(([key, value]) => {
-        const target = document.querySelector(`[data-kpi="${key}"]`);
-        if (target) target.textContent = value;
-      });
-      showToast('Période active: ' + tab.textContent);
-    });
-
-    const searchInput = document.getElementById('searchInput');
-    const filterables = [...document.querySelectorAll('.group-item, .event-item')];
-    searchInput.addEventListener('input', () => {
-      const value = searchInput.value.toLowerCase().trim();
-      filterables.forEach(item => {
-        const text = (item.dataset.search + ' ' + item.textContent).toLowerCase();
-        item.style.display = !value || text.includes(value) ? '' : 'none';
-      });
-    });
-
-    document.getElementById('themeBtn').addEventListener('click', () => {
-      const dark = document.body.dataset.theme === 'dark';
-      if (dark) {
-        document.body.dataset.theme = '';
-        document.documentElement.style.setProperty('--bg', '#eef2f5');
-        document.documentElement.style.setProperty('--panel', '#ffffff');
-        document.documentElement.style.setProperty('--line', '#dce3eb');
-        document.documentElement.style.setProperty('--text', '#0f172a');
-      } else {
-        document.body.dataset.theme = 'dark';
-        document.documentElement.style.setProperty('--bg', '#0f172a');
-        document.documentElement.style.setProperty('--panel', '#111b2b');
-        document.documentElement.style.setProperty('--line', '#253247');
-        document.documentElement.style.setProperty('--text', '#e2e8f0');
+        return React.createElement(React.Fragment,null,
+          React.createElement('header',{className:'top'},React.createElement('div',{className:'top-in'},
+            React.createElement('div',{className:'brand'},React.createElement('span',{className:'logo'},'✣'),'Hub2gether Admin'),
+            React.createElement('label',{className:'search'},'🔎',React.createElement('input',{placeholder:'Rechercher équipes, événements, départements...',value:q,onChange:e=>setQ(e.target.value)})),
+            React.createElement('div',null,
+              React.createElement('button',{className:'btn',onClick:()=>show('3 alertes RH détectées')},'🔔 Alertes')
+            )
+          )),
+          React.createElement('main',{className:'container'},
+            React.createElement('section',{className:'hero'},React.createElement('div',null,React.createElement('h1',null,'HR Performance Dashboard'),React.createElement('p',null,'Version React complète pour la démo entreprise (SaaS).')),
+              React.createElement('div',{className:'tabs'},['weekly','monthly','yearly'].map(p=>React.createElement('button',{key:p,className:'tab'+(period===p?' active':''),onClick:()=>{setPeriod(p);show('Période : '+p)}},p[0].toUpperCase()+p.slice(1)))))
+            ,React.createElement('section',{className:'grid4'},
+              [['👥','Active Employees','employees','employeesDelta'],['⚽','Sports Groups','groups','groupsDelta'],['✅','Matches This Month','matches','matchesDelta'],['📅','Upcoming Events','events','eventsDelta']].map(([ic,l,k,d])=>React.createElement('article',{key:k,className:'card click',onClick:()=>show('Ouverture : '+l)},React.createElement('div',{className:'kpi-h'},React.createElement('span',{className:'icon'},ic),React.createElement('span',{className:'up',style:k==='events'?{color:'#94a3b8'}:{}},data[d])),React.createElement('p',{className:'k-label'},l),React.createElement('p',{className:'k-value'},data[k]))))
+            ,React.createElement('section',{className:'main'},
+              React.createElement('article',{className:'card click',onClick:()=>show('Répartition sportive')},React.createElement('h2',{className:'section-title'},'Sports Distribution'),React.createElement('div',{className:'donut'},React.createElement('span',null,'35%\nPadel')),
+                React.createElement('div',{className:'legend'},React.createElement('span',null,React.createElement('i',{className:'dot',style:{background:'#77e0b3'}}),'Padel (35%)'),React.createElement('span',null,React.createElement('i',{className:'dot',style:{background:'#22c55e'}}),'Football (25%)'),React.createElement('span',null,React.createElement('i',{className:'dot',style:{background:'#facc15'}}),'Running (20%)'),React.createElement('span',null,React.createElement('i',{className:'dot',style:{background:'#a78bfa'}}),'Tennis (15%)'))),
+              React.createElement('article',{className:'card click',onClick:()=>show('Participation hebdomadaire')},React.createElement('h2',{className:'section-title'},'Weekly Participation'),React.createElement('div',{className:'bars'},[120,155,205,175,132,188,171].map((h,i)=>React.createElement('div',{key:i,className:'bar-wrap'},React.createElement('div',{className:'bar',style:{height:h+'px',background:i===2?'#77e0b3':undefined}}),['MON','TUE','WED','THU','FRI','SAT','SUN'][i]))))
+            )
+            ,React.createElement('section',{className:'card'},React.createElement('h2',{className:'section-title'},'Popular Sports Groups'),React.createElement('div',{className:'grid3'},filteredGroups.map((g)=>React.createElement('article',{key:g.name,className:'card click',onClick:()=>show('Ouverture : '+g.name)},React.createElement('div',{className:'group-t'},React.createElement('span',{className:'icon'},g.icon),React.createElement('span',{className:'tag '+g.tone},g.tag)),React.createElement('p',{className:'name'},g.name),React.createElement('p',{className:'desc'},g.desc),React.createElement('div',{className:'meta'},g.meta)))))
+            ,React.createElement('section',{className:'grid2'},
+              React.createElement('article',{className:'card click',onClick:()=>show('Départements')},React.createElement('h2',{className:'section-title'},'Top Departments Participation'),[['Marketing',82],['Sales',75],['Engineering',68],['R&D',64]].map(([n,v])=>React.createElement('div',{key:n,style:{marginBottom:'10px'}},React.createElement('div',{style:{display:'flex',justifyContent:'space-between',fontWeight:700,fontSize:'13px',marginBottom:'5px'}},React.createElement('span',null,n),React.createElement('span',null,v+'%')),React.createElement('div',{className:'track'},React.createElement('div',{className:'fill',style:{width:v+'%'}}))))),
+              React.createElement('article',{className:'card'},React.createElement('h2',{className:'section-title'},'Inter-Company Events'),filteredEvents.map((e)=>React.createElement('div',{key:e.name,className:'event click',onClick:()=>show('Event : '+e.name)},React.createElement('div',null,React.createElement('div',{style:{fontWeight:700,fontSize:'14px'}},e.name),React.createElement('div',{style:{fontSize:'12px',color:'#64748b'}},e.date)),React.createElement('span',{className:'status '+(e.status==='Past'?'past':'upcoming')},e.status))))
+            )
+          ),toast && React.createElement('div',{className:'toast'},toast)
+        );
       }
-      showToast(dark ? 'Thème clair activé' : 'Thème sombre activé');
-    });
 
-    window.addEventListener('load', () => {
-      document.querySelectorAll('.fill').forEach((bar) => {
-        bar.style.width = bar.dataset.width + '%';
-      });
-      showToast('Dashboard prêt — toutes les cartes sont cliquables');
-    });
-  </script>
-</body>
+      function Landing(){
+        return React.createElement('main',{className:'container'},React.createElement('section',{className:'landing card'},
+          React.createElement('h1',null,'Hub2gether SaaS'),
+          React.createElement('p',null,'Code principal unifié en React. La démo entreprise et le dashboard viennent de la même base, sans version succursale.'),
+          React.createElement('div',{className:'cta'},
+            React.createElement('a',{className:'primary',href:'?view=dashboard'},'Essayer la démo entreprise'),
+            React.createElement('a',{className:'ghost',href:'index-copy-paste.html'},'Voir la vitrine historique')
+          )
+        ));
+      }
+
+      function App(){
+        const view=new URLSearchParams(window.location.search).get('view');
+        return view==='dashboard' ? React.createElement(Dashboard) : React.createElement(Landing);
+      }
+
+      createRoot(document.getElementById('root')).render(React.createElement(App));
+    </script>
+  </body>
 </html>
