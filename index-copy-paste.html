@@ -613,30 +613,6 @@ nav.scrolled {
 }
 .dashboard-embed-shell .module-title,
 .dashboard-embed-shell .module-note { color: #fff; }
-.dashboard-reveal-wrap {
-  margin-top: 26px;
-  height: 220vh;
-  position: relative;
-}
-.dashboard-reveal-sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px 0 0;
-}
-.dashboard-reveal-shell {
-  width: 100%;
-  transform: scale(0.82);
-  opacity: 0.45;
-  transition: transform 0.2s linear, opacity 0.2s linear;
-}
-.dashboard-reveal-wrap.is-visible .dashboard-reveal-shell {
-  transform: scale(1);
-  opacity: 1;
-}
 
 /* ══════════════════════════════════════════
    3D BALL SECTION
@@ -1474,20 +1450,14 @@ footer {
 
 <!-- ══════ MODULE DASHBOARD INTÉGRÉ ══════ -->
 <section class="module-showcase dashboard-showcase" id="dashboard-module">
-  <div class="dashboard-reveal-wrap" id="dashboardRevealWrap">
-    <div class="dashboard-reveal-sticky">
-      <div class="dashboard-reveal-shell">
-        <div class="module-shell dashboard-embed-shell">
-          <div class="module-topbar">
-            <div>
-              <div class="module-title">Hub2gether · Dashboard exécutif</div>
-              <div class="module-note">Version déroulante immersive intégrée à la landing</div>
-            </div>
-          </div>
-          <iframe class="module-frame module-frame--dashboard" src="./hub2gether-hero-zoom.html?embed=1" title="Dashboard Hub2gether"></iframe>
-        </div>
+  <div class="module-shell dashboard-embed-shell" style="margin-top:26px;">
+    <div class="module-topbar">
+      <div>
+        <div class="module-title">Hub2gether · Dashboard exécutif</div>
+        <div class="module-note">Version complète et fixe du dashboard entreprise</div>
       </div>
     </div>
+    <iframe class="module-frame module-frame--dashboard" src="./hub2gether-hero-zoom.html?embed=1" title="Dashboard Hub2gether"></iframe>
   </div>
 </section>
 
@@ -1922,17 +1892,6 @@ document.querySelectorAll('.stat-block').forEach(function(el, i) {
   el.setAttribute('data-delay', i * 80);
   revealObs.observe(el);
 });
-
-// ─── Dashboard reveal (scroll-only block) ───
-var dashboardRevealWrap = document.getElementById('dashboardRevealWrap');
-if (dashboardRevealWrap) {
-  var dashboardRevealObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      dashboardRevealWrap.classList.toggle('is-visible', entry.isIntersecting);
-    });
-  }, { threshold: 0.45 });
-  dashboardRevealObs.observe(dashboardRevealWrap);
-}
 
 // ─── Counter animation ───
 function animateCounter(el) {
