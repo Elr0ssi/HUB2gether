@@ -1234,6 +1234,86 @@ nav.scrolled {
   margin-top: 20px; position: relative; z-index: 1;
 }
 
+/* demo chooser */
+.demo-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 14, 10, 0.72);
+  z-index: 1200;
+  padding: 24px;
+}
+.demo-modal.is-open { display: flex; }
+.demo-modal-card {
+  width: min(920px, 100%);
+  background: #fff;
+  border-radius: 26px;
+  border: 1px solid var(--border);
+  box-shadow: 0 30px 80px rgba(3, 16, 12, 0.25);
+  padding: 28px;
+}
+.demo-modal-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+.demo-modal-head h3 {
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  margin-bottom: 6px;
+}
+.demo-modal-head p { color: var(--muted); font-size: 0.92rem; max-width: 560px; }
+.demo-close {
+  border: 1px solid var(--border);
+  background: var(--cream);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.demo-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.demo-option {
+  display: block;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 18px;
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.demo-option:hover {
+  transform: translateY(-2px);
+  border-color: rgba(127,227,179,0.62);
+  box-shadow: 0 14px 30px rgba(15,46,34,0.1);
+}
+.demo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 7px 11px;
+  margin-bottom: 10px;
+}
+.demo-badge--enterprise { background: rgba(127,227,179,0.28); color: #1f6947; }
+.demo-badge--player { background: rgba(122,167,255,0.26); color: #3a5ea5; }
+.demo-option h4 { font-size: 1.2rem; margin-bottom: 6px; }
+.demo-option p { font-size: 0.86rem; color: var(--muted); line-height: 1.65; margin-bottom: 14px; }
+.demo-feature-list { list-style: none; display: grid; gap: 7px; }
+.demo-feature-list li { font-size: 0.8rem; color: #1d3b30; }
+
 /* ══════════════════════════════════════════
    FOOTER
 ══════════════════════════════════════════ */
@@ -1300,6 +1380,7 @@ footer {
   .pricing-left { flex: none; max-width: 100%; padding: 60px 6vw 40px; }
   .pricing-right { padding: 20px 6vw 60px; }
   .cards-wrap { max-width: 100%; height: 680px; }
+  .demo-options { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   .stats-row { grid-template-columns: 1fr; }
@@ -1324,8 +1405,8 @@ footer {
     <li><a href="#testi">Témoignages</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-    Demander une démo
+  <button class="nav-cta" onclick="openDemoChooser()">
+    Essayer la démo
   </button>
 </nav>
 
@@ -1344,8 +1425,8 @@ footer {
   <p class="hero-sub">Hub2gether permet aux collaborateurs de se retrouver autour du sport, d'organiser des matchs et de créer une vraie communauté sportive au sein de leur entreprise.</p>
 
   <div class="hero-btns">
-    <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
-      Demander une démo
+    <button class="btn-primary" onclick="openDemoChooser()">
+      Essayer la démo
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
     <button class="btn-secondary" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">
@@ -1833,6 +1914,40 @@ footer {
   </div>
 </footer>
 
+<div class="demo-modal" id="demoModal" aria-hidden="true">
+  <div class="demo-modal-card" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle">
+    <div class="demo-modal-head">
+      <div>
+        <h3 id="demoModalTitle">Essayez la plateforme SaaS Hub2gether</h3>
+        <p>Choisissez votre expérience : côté entreprise pour piloter toute l’organisation sportive (stats globales, graphiques, compétitions intra/inter-entreprises), ou côté utilisateur pour vivre le parcours collaborateur.</p>
+      </div>
+      <button class="demo-close" type="button" onclick="closeDemoChooser()" aria-label="Fermer">✕</button>
+    </div>
+    <div class="demo-options">
+      <a class="demo-option" href="./hub2gether-hero-zoom.html?embed=0&demo=enterprise" target="_blank" rel="noopener">
+        <span class="demo-badge demo-badge--enterprise">Mode entreprise</span>
+        <h4>Dashboard RH & Direction</h4>
+        <p>Accédez à un cockpit complet avec KPI d’entreprise, engagement des équipes, activité sportive et vision consolidée par département.</p>
+        <ul class="demo-feature-list">
+          <li>• Graphiques d’adoption et de participation.</li>
+          <li>• Classements intra/inter-entreprises.</li>
+          <li>• Analyse de performance collective par sport.</li>
+        </ul>
+      </a>
+      <a class="demo-option" href="./hub2gether-agenda.html?embed=0&demo=user" target="_blank" rel="noopener">
+        <span class="demo-badge demo-badge--player">Mode utilisateur</span>
+        <h4>Parcours collaborateur</h4>
+        <p>Créez des groupes, rejoignez des matchs et suivez vos stats individuelles dans une expérience sociale orientée pratique sportive.</p>
+        <ul class="demo-feature-list">
+          <li>• Gestion d’équipe et création de groupe.</li>
+          <li>• Statistiques personnelles et progression.</li>
+          <li>• Compétitions et challenges entre entreprises.</li>
+        </ul>
+      </a>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════════════════════════════════════
      SCRIPTS
 ══════════════════════════════════════════ -->
@@ -1842,6 +1957,26 @@ var navbar = document.getElementById('navbar');
 window.addEventListener('scroll', function() {
   navbar.classList.toggle('scrolled', window.scrollY > 20);
 }, { passive: true });
+
+var demoModal = document.getElementById('demoModal');
+function openDemoChooser() {
+  if (!demoModal) return;
+  demoModal.classList.add('is-open');
+  demoModal.setAttribute('aria-hidden', 'false');
+}
+function closeDemoChooser() {
+  if (!demoModal) return;
+  demoModal.classList.remove('is-open');
+  demoModal.setAttribute('aria-hidden', 'true');
+}
+if (demoModal) {
+  demoModal.addEventListener('click', function(e) {
+    if (e.target === demoModal) closeDemoChooser();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeDemoChooser();
+  });
+}
 
 // ─── Scroll reveal ───
 var revealEls = document.querySelectorAll('.problem-card, .feature-card, .testi-card, .stat-block');
