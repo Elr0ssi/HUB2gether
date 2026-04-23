@@ -1,0 +1,288 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  super_admin
+  company_admin
+  group_admin
+  player
+}
+
+enum Mindset {
+  competitive
+  casual
+  discovery
+}
+
+enum GroupVisibility {
+  private
+  company
+  public_company_network
+}
+
+enum MatchStatus {
+  open
+  full
+  cancelled
+  completed
+}
+
+enum ParticipantStatus {
+  joined
+  waiting
+  declined
+  attended
+}
+
+enum ExpenseShareStatus {
+  pending
+  settled
+}
+
+model Company {
+  id             String          @id @default(cuid())
+  name           String
+  slug           String          @unique
+  domain         String          @unique
+  logoUrl        String?
+  users          User[]
+  groups         Group[]
+  matches        Match[]
+  adminAuditLogs AdminAuditLog[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+}
+
+model User {
+  id                String             @id @default(cuid())
+  companyId         String
+  company           Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  email             String
+  firstName         String
+  lastName          String
+  avatarUrl         String?
+  role              Role               @default(player)
+  department        String?
+  jobTitle          String?
+  isActive          Boolean            @default(true)
+  profile           PlayerProfile?
+  userSports        UserSport[]
+  groupMemberships  GroupMember[]
+  groupPosts        GroupPost[]
+  createdMatches    Match[]            @relation("MatchCreator")
+  matchParticipants MatchParticipant[]
+  paidExpenses      Expense[]          @relation("ExpensePaidBy")
+  expenseShares     ExpenseShare[]
+  badges            UserBadge[]
+  notifications     Notification[]
+  auditActions      AdminAuditLog[]    @relation("AuditActor")
+  createdGroups     Group[]            @relation("GroupCreator")
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+
+  @@unique([companyId, email])
+}
+
+model PlayerProfile {
+  id                  String   @id @default(cuid())
+  userId               String   @unique
+  user                 User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bio                  String?
+  city                 String?
+  levelGlobal          Int      @default(1)
+  preferredMindset     Mindset?
+  availabilityNotes    String?
+  matchesPlayed        Int      @default(0)
+  wins                 Int      @default(0)
+  losses               Int      @default(0)
+  rankingPoints        Int      @default(1000)
+  onboardingCompleted  Boolean  @default(false)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+
+model Sport {
+  id        String      @id @default(cuid())
+  name      String      @unique
+  icon      String
+  isActive  Boolean     @default(true)
+  userSports UserSport[]
+  groups    Group[]
+  matches   Match[]
+}
+
+model UserSport {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sportId    String
+  sport      Sport    @relation(fields: [sportId], references: [id], onDelete: Cascade)
+  level      Int      @default(1)
+  isFavorite Boolean  @default(false)
+
+  @@unique([userId, sportId])
+}
+
+model Group {
+  id          String          @id @default(cuid())
+  companyId   String
+  company     Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  name        String
+  slug        String
+  description String
+  sportId     String?
+  sport       Sport?          @relation(fields: [sportId], references: [id])
+  visibility  GroupVisibility @default(company)
+  createdById String
+  createdBy   User            @relation("GroupCreator", fields: [createdById], references: [id])
+  members     GroupMember[]
+  posts       GroupPost[]
+  matches     Match[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@unique([companyId, slug])
+}
+
+model GroupMember {
+  id       String   @id @default(cuid())
+  groupId  String
+  group    Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role     String   @default("member")
+  joinedAt DateTime @default(now())
+
+  @@unique([groupId, userId])
+}
+
+model GroupPost {
+  id        String   @id @default(cuid())
+  groupId   String
+  group     Group    @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Match {
+  id              String          @id @default(cuid())
+  companyId       String
+  company         Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  groupId         String?
+  group           Group?          @relation(fields: [groupId], references: [id])
+  sportId         String
+  sport           Sport           @relation(fields: [sportId], references: [id])
+  createdById     String
+  createdBy       User            @relation("MatchCreator", fields: [createdById], references: [id])
+  title           String
+  description     String
+  mindset         Mindset
+  levelMin        Int?
+  levelMax        Int?
+  locationName    String
+  locationAddress String
+  latitude        Float?
+  longitude       Float?
+  startAt         DateTime
+  endAt           DateTime
+  maxPlayers      Int
+  visibility      GroupVisibility @default(company)
+  status          MatchStatus     @default(open)
+  costTotal       Decimal?        @db.Decimal(10, 2)
+  participants    MatchParticipant[]
+  expenses        Expense[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model MatchParticipant {
+  id        String            @id @default(cuid())
+  matchId   String
+  match     Match             @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  status    ParticipantStatus @default(joined)
+  score     Int?
+  createdAt DateTime          @default(now())
+
+  @@unique([matchId, userId])
+}
+
+model Expense {
+  id        String         @id @default(cuid())
+  matchId   String
+  match     Match          @relation(fields: [matchId], references: [id], onDelete: Cascade)
+  paidById  String
+  paidBy    User           @relation("ExpensePaidBy", fields: [paidById], references: [id])
+  label     String
+  amount    Decimal        @db.Decimal(10, 2)
+  currency  String         @default("EUR")
+  shares    ExpenseShare[]
+  createdAt DateTime       @default(now())
+}
+
+model ExpenseShare {
+  id         String            @id @default(cuid())
+  expenseId  String
+  expense    Expense           @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amountDue  Decimal           @db.Decimal(10, 2)
+  amountPaid Decimal           @default(0) @db.Decimal(10, 2)
+  status     ExpenseShareStatus @default(pending)
+
+  @@unique([expenseId, userId])
+}
+
+model Badge {
+  id          String     @id @default(cuid())
+  code        String     @unique
+  name        String
+  description String
+  icon        String
+  userBadges  UserBadge[]
+}
+
+model UserBadge {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badgeId   String
+  badge     Badge    @relation(fields: [badgeId], references: [id], onDelete: Cascade)
+  awardedAt DateTime @default(now())
+
+  @@unique([userId, badgeId])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  title     String
+  body      String
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+}
+
+model AdminAuditLog {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  actorUserId String
+  actorUser   User     @relation("AuditActor", fields: [actorUserId], references: [id])
+  action      String
+  entityType  String
+  entityId    String
+  metadata    Json
+  createdAt   DateTime @default(now())
+}
