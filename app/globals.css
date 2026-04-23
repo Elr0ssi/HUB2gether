@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-background text-white antialiased;
+}
+
+.card {
+  @apply rounded-2xl border border-white/10 bg-card shadow-xl;
+}
